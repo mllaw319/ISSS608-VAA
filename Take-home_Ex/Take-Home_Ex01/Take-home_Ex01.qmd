@@ -147,8 +147,8 @@ Although we are not able to see the mean and median in the population pyramid ch
 | Planning Area | Mode (Age group)               |
 |---------------|--------------------------------|
 | Bedok         | 60-64                          |
-| Chao Chu Kang | 45-49 (Male), 40-44 (Female)   |
-| Huogang       | 60-64                          |
+| Chua Chu Kang | 45-49 (Male), 40-44 (Female)   |
+| Hougang       | 60-64                          |
 | Jurong West   | 45-49 (Male), 40-44 (Female)   |
 | Punggol       | 35-39                          |
 | Sengkang      | 40-44 (Male), 35-39 (Female)   |
