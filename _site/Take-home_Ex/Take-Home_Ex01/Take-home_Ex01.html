@@ -140,12 +140,15 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#import-data" id="toc-import-data" class="nav-link" data-scroll-target="#import-data">4.1 Import data</a></li>
   <li><a href="#create-the-age-sex-pyramid" id="toc-create-the-age-sex-pyramid" class="nav-link" data-scroll-target="#create-the-age-sex-pyramid">4.2 Create the Age-Sex Pyramid</a></li>
   <li><a href="#create-trellis-chart" id="toc-create-trellis-chart" class="nav-link" data-scroll-target="#create-trellis-chart">4.3 Create trellis chart</a></li>
-  <li><a href="#create-and-publish-dashboard" id="toc-create-and-publish-dashboard" class="nav-link" data-scroll-target="#create-and-publish-dashboard">4.4 Create and Publish Dashboard</a></li>
+  <li><a href="#format-charts" id="toc-format-charts" class="nav-link" data-scroll-target="#format-charts">4.4 Format Charts</a></li>
+  <li><a href="#create-and-publish-dashboard" id="toc-create-and-publish-dashboard" class="nav-link" data-scroll-target="#create-and-publish-dashboard">4.5 Create and Publish Dashboard</a></li>
   </ul></li>
   <li><a href="#data-patterns" id="toc-data-patterns" class="nav-link" data-scroll-target="#data-patterns">5. Data Patterns</a>
   <ul class="collapse">
   <li><a href="#overall-pattern" id="toc-overall-pattern" class="nav-link" data-scroll-target="#overall-pattern">Overall pattern</a></li>
   <li><a href="#difference-among-planning-areas" id="toc-difference-among-planning-areas" class="nav-link" data-scroll-target="#difference-among-planning-areas">Difference among planning areas</a></li>
+  <li><a href="#mean-median-mode" id="toc-mean-median-mode" class="nav-link" data-scroll-target="#mean-median-mode">Mean, Median, Mode</a></li>
+  <li><a href="#lesson-learnt" id="toc-lesson-learnt" class="nav-link" data-scroll-target="#lesson-learnt">Lesson Learnt</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -194,7 +197,7 @@ ul.task-list li input[type="checkbox"] {
 <h1>3. Dashboard</h1>
 <p>Below is the tableau dashboard. You can access <a href="https://public.tableau.com/app/profile/law.man.long/viz/Take-home_Ex1/SingaporePopulationPyramid?publish=yes">here</a> if the dashboard is not properly displayed.</p>
 
-<div class="tableauPlaceholder" id="viz1674226598160" style="position: relative"><noscript><a href="#"><img alt="Singapore Population Pyramid " src="https://public.tableau.com/static/images/Ta/Take-home_Ex1/SingaporePopulationPyramid/1_rss.png" style="border: none"></a></noscript><object class="tableauViz" style="display:none;"><param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F"> <param name="embed_code_version" value="3"> <param name="site_root" value=""><param name="name" value="Take-home_Ex1/SingaporePopulationPyramid"><param name="tabs" value="no"><param name="toolbar" value="yes"><param name="static_image" value="https://public.tableau.com/static/images/Ta/Take-home_Ex1/SingaporePopulationPyramid/1.png"> <param name="animate_transition" value="yes"><param name="display_static_image" value="yes"><param name="display_spinner" value="yes"><param name="display_overlay" value="yes"><param name="display_count" value="yes"><param name="language" value="en-US"></object></div>                <script type="text/javascript">                    var divElement = document.getElementById('viz1674226598160');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='727px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+<div class="tableauPlaceholder" id="viz1674292254371" style="position: relative"><noscript><a href="#"><img alt="Singapore Population Pyramid " src="https://public.tableau.com/static/images/Ta/Take-home_Ex1/SingaporePopulationPyramid/1_rss.png" style="border: none"></a></noscript><object class="tableauViz" style="display:none;"><param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F"> <param name="embed_code_version" value="3"> <param name="site_root" value=""><param name="name" value="Take-home_Ex1/SingaporePopulationPyramid"><param name="tabs" value="no"><param name="toolbar" value="yes"><param name="static_image" value="https://public.tableau.com/static/images/Ta/Take-home_Ex1/SingaporePopulationPyramid/1.png"> <param name="animate_transition" value="yes"><param name="display_static_image" value="yes"><param name="display_spinner" value="yes"><param name="display_overlay" value="yes"><param name="display_count" value="yes"><param name="language" value="en-US"><param name="filter" value="publish=yes"></object></div>                <script type="text/javascript">                    var divElement = document.getElementById('viz1674292254371');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='727px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
 </section>
 <section id="step-by-step-procedures" class="level1">
 <h1>4. Step-by-Step Procedures</h1>
@@ -203,9 +206,9 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="import-data">4.1 Import data</h2>
 <table class="table">
 <colgroup>
-<col style="width: 8%">
-<col style="width: 59%">
-<col style="width: 30%">
+<col style="width: 5%">
+<col style="width: 45%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -218,7 +221,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td>1.</td>
 <td>Load the respopagesextod2022.csv data file into Tableau Desktop</td>
-<td><img src="images/image-1952342160.png" class="img-fluid" width="291"></td>
+<td><img src="images/image-1952342160.png" class="img-fluid"> |</td>
 </tr>
 <tr class="even">
 <td>2.</td>
@@ -235,8 +238,8 @@ ul.task-list li input[type="checkbox"] {
 <table class="table">
 <colgroup>
 <col style="width: 5%">
-<col style="width: 73%">
-<col style="width: 20%">
+<col style="width: 45%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -249,7 +252,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td>1.</td>
 <td>Create a new Sheet 1. Drag [Age] to Rows. You will see a table with all the Ages in rows.</td>
-<td><img src="images/image-767376078.png" class="img-fluid" width="274"></td>
+<td><img src="images/image-767376078.png" class="img-fluid"> |</td>
 </tr>
 <tr class="even">
 <td>2.</td>
@@ -280,9 +283,9 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="create-trellis-chart">4.3 Create trellis chart</h2>
 <table class="table">
 <colgroup>
-<col style="width: 2%">
-<col style="width: 82%">
-<col style="width: 14%">
+<col style="width: 5%">
+<col style="width: 45%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -305,7 +308,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td>3.</td>
 <td>Select top 9 planning area with most population on the right filter</td>
-<td><img src="images/image-761056057.png" class="img-fluid" width="81"></td>
+<td><img src="images/image-761056057.png" class="img-fluid"></td>
 </tr>
 <tr class="even">
 <td>4.</td>
@@ -313,10 +316,49 @@ ul.task-list li input[type="checkbox"] {
 <p>Select [Column] and choose Compute Using [Planning Area]. Repeat the same for [Rows]</p></td>
 <td><img src="images/image-2019932566.png" class="img-fluid"></td>
 </tr>
+</tbody>
+</table>
+</section>
+<section id="format-charts" class="level2">
+<h2 class="anchored" data-anchor-id="format-charts">4.4 Format Charts</h2>
+<table class="table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 45%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>No.</th>
+<th>Step</th>
+<th>Screenshot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.</td>
+<td>Create a calculated field called “Total Pop” using FIXED[Planning Area]. This is to calculate the total population for each planning area</td>
+<td><img src="images/image-1121293406.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>2.</td>
+<td>Under SUM(Female Pop) on the left panel, drag [Planning Area] and [Total Pop] to Label.</td>
+<td><img src="images/image-1939628531.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>3.</td>
+<td>Under label, check the box for show mark labels. Check the box for (Allow labels to overlap other marks) and (Label maximum label). The label for each planning area and total population will appear on the top of each chart.</td>
+<td><img src="images/image-1995303566.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>4.</td>
+<td>Click on Tooltip and edit the information as screenshot</td>
+<td><img src="images/image-169236254.png" class="img-fluid"></td>
+</tr>
 <tr class="odd">
 <td>5.</td>
-<td>Under SUM(Female Pop) on the left panel, drag [Planning Area] to Label and check the box for show mark labels. Check the box for (Allow labels to overlap other marks) and (Label maximum label). The label for each planning area will appear on the top of each chart.</td>
-<td><img src="images/image-416552956.png" class="img-fluid"></td>
+<td>Right click the graph and choose format. Format the grid lines for column.</td>
+<td><img src="images/image-213511136.png" class="img-fluid"></td>
 </tr>
 <tr class="even">
 <td>6.</td>
@@ -327,12 +369,12 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </section>
 <section id="create-and-publish-dashboard" class="level2">
-<h2 class="anchored" data-anchor-id="create-and-publish-dashboard">4.4 Create and Publish Dashboard</h2>
+<h2 class="anchored" data-anchor-id="create-and-publish-dashboard">4.5 Create and Publish Dashboard</h2>
 <table class="table">
 <colgroup>
-<col style="width: 7%">
-<col style="width: 65%">
-<col style="width: 26%">
+<col style="width: 5%">
+<col style="width: 45%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -350,22 +392,22 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td>2.</td>
 <td>On the left bar, choose Automatic under Size. This is to allow the dashboard frame fits to different browser size.</td>
-<td><img src="images/image-1148781027.png" class="img-fluid" width="122"></td>
+<td><img src="images/image-1266361076.png" class="img-fluid"></td>
 </tr>
 <tr class="odd">
-<td>2.</td>
+<td>3.</td>
 <td>Go to Data on the top navigation bar and choose Extract data. Press Extract in the dialog box.</td>
-<td><img src="images/image-100369277.png" class="img-fluid" width="247"></td>
+<td><img src="images/image-100369277.png" class="img-fluid"> |</td>
 </tr>
 <tr class="even">
-<td>3.</td>
+<td>4.</td>
 <td>Go to Sever at the top navigator bar and choose Tableau Public and Save to Tableau Public</td>
 <td><img src="images/image-1845484120.png" class="img-fluid"></td>
 </tr>
 <tr class="odd">
-<td>4.</td>
+<td>5.</td>
 <td>The tableau dashboard is published under my tableau public account and a website is generated for share.</td>
-<td><img src="images/image-1487417313.png" class="img-fluid"></td>
+<td><img src="images/image-1573887670.png" class="img-fluid"></td>
 </tr>
 </tbody>
 </table>
@@ -377,9 +419,80 @@ ul.task-list li input[type="checkbox"] {
 <section id="overall-pattern" class="level3">
 <h3 class="anchored" data-anchor-id="overall-pattern">Overall pattern</h3>
 <p>All of the 9 Planning Area shared similar shape pattern which is similar to a “constrictive pyramid”. The graph is narrow at the base which signals a declining birth rate and low fertility rate. Most of the graphs are wide at the middle which signals a high life expectancy and low mortality rate. The overall population could be reducing as a result.</p>
+<p>All the planning areas has a symmetric pattern, which signals that there are no age structure difference for male and female.</p>
 </section>
 <section id="difference-among-planning-areas" class="level3">
 <h3 class="anchored" data-anchor-id="difference-among-planning-areas">Difference among planning areas</h3>
+<p>Top 9 planning areas with the most population are selected for the dashboard. Most planning areas display a similar age pattern with a narrow top and narrow base. However, there are still some slight different pattern among some planning areas.</p>
+<section id="punggol-sengkang-and-tampines" class="level4">
+<h4 class="anchored" data-anchor-id="punggol-sengkang-and-tampines">1. Punggol, Sengkang and Tampines</h4>
+<p>In these 3 planning areas, most people are at their 35-45, which is younger that the other planning areas. At the same there are also a high number of children and new birth, which might indicates people that there are higher birth rate in those planning areas. However, there is a sharp decrease in age group of 20-29 years old, which results in a pattern like Christmas tree.</p>
+<p><img src="images/image-331791494.png" class="img-fluid"></p>
+</section>
+<section id="bedok-and-jurong-west" class="level4">
+<h4 class="anchored" data-anchor-id="bedok-and-jurong-west">2. Bedok and Jurong West</h4>
+<p>Another 3 areas that demonstrates similar pattern are Bedok and Jurong West. These two districts both have higher population elder age group of 50-69 &amp; 40-64, which might signal people are likely to stay in the same planning area until they age.</p>
+<p><img src="images/image-221862328.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="mean-median-mode" class="level3">
+<h3 class="anchored" data-anchor-id="mean-median-mode">Mean, Median, Mode</h3>
+<p>Although we are not able to see the mean and median in the population pyramid chart, we can observe the median of the 9 planning areas. Here are the mode for the 9 planning area:</p>
+<table class="table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Planning Area</th>
+<th>Mode (Age group)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bedok</td>
+<td>60-64</td>
+</tr>
+<tr class="even">
+<td>Chao Chu Kang</td>
+<td>45-49 (Male), 40-44 (Female)</td>
+</tr>
+<tr class="odd">
+<td>Huogang</td>
+<td>60-64</td>
+</tr>
+<tr class="even">
+<td>Jurong West</td>
+<td>45-49 (Male), 40-44 (Female)</td>
+</tr>
+<tr class="odd">
+<td>Punggol</td>
+<td>35-39</td>
+</tr>
+<tr class="even">
+<td>Sengkang</td>
+<td>40-44 (Male), 35-39 (Female)</td>
+</tr>
+<tr class="odd">
+<td>Tampines</td>
+<td>30-34</td>
+</tr>
+<tr class="even">
+<td>Woodlands</td>
+<td>25-29 (Female), 50-54 (Female)</td>
+</tr>
+<tr class="odd">
+<td>Yishun</td>
+<td>30-34</td>
+</tr>
+</tbody>
+</table>
+<p>Although we can see spot some pattern for planning area for younger population, most planning area are quite close in terms of mode. There are no clear insights base on the mode information.</p>
+</section>
+<section id="lesson-learnt" class="level3">
+<h3 class="anchored" data-anchor-id="lesson-learnt">Lesson Learnt</h3>
+<p>Population pyramid gives us a good understand on an area birth rate, mortality rate, and dependency ratio. However, It might be more meaningful if we can compare the population distribution with other information such as education level, employment rate and income level for future studies. It would be interesting to also draw comparison with other countries’ data to see if there are any similar pattern or distinct pattern of Singapore residence.</p>
 
 
 </section>

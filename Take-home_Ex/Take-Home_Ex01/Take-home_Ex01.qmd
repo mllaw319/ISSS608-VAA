@@ -2,6 +2,8 @@
 title: "Take Home Exercise"
 author: "Law Man Long"
 date: "`r Sys.Date()`"
+
+tbl-colwidths: [5,45,50]
 ---
 
 # 1. Dashboard Description
@@ -17,7 +19,7 @@ This purpose of the dashboard is to show the demographic structure of Singapore 
 Below is the tableau dashboard. You can access [here](https://public.tableau.com/app/profile/law.man.long/viz/Take-home_Ex1/SingaporePopulationPyramid?publish=yes) if the dashboard is not properly displayed.
 
 ```{=html}
-<div class='tableauPlaceholder' id='viz1674226598160' style='position: relative'><noscript><a href='#'><img alt='Singapore Population Pyramid ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ta&#47;Take-home_Ex1&#47;SingaporePopulationPyramid&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Take-home_Ex1&#47;SingaporePopulationPyramid' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ta&#47;Take-home_Ex1&#47;SingaporePopulationPyramid&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1674226598160');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='727px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+<div class='tableauPlaceholder' id='viz1674292254371' style='position: relative'><noscript><a href='#'><img alt='Singapore Population Pyramid ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ta&#47;Take-home_Ex1&#47;SingaporePopulationPyramid&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Take-home_Ex1&#47;SingaporePopulationPyramid' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ta&#47;Take-home_Ex1&#47;SingaporePopulationPyramid&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1674292254371');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='727px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
 ```
 # 4. Step-by-Step Procedures
 
@@ -25,71 +27,85 @@ The section details the steps required to produce the geographic distribution da
 
 ## 4.1 Import data
 
-+-------------+---------------------------------------------------------------------------------------------+-----------------------------------------------+
-| No.         | Step                                                                                        | Screenshot                                    |
-+=============+=============================================================================================+===============================================+
-| 1\.         | Load the respopagesextod2022.csv data file into Tableau Desktop                             | ![](images/image-1952342160.png){width="291"} |
-+-------------+---------------------------------------------------------------------------------------------+-----------------------------------------------+
-| 2\.         | Preview data under the \[Data Source\] tab. The data set contains 7 fields and 100927 rows. | ![](images/image-651906499.png)               |
-|             |                                                                                             |                                               |
-|             | Rename field name \[PA\] to \[Planning Area\] and \[AG\] to \[Age\] for easy reference.     | ![](images/image-1827499359.png)              |
-+-------------+---------------------------------------------------------------------------------------------+-----------------------------------------------+
++-------------+---------------------------------------------------------------------------------------------+-------------------------------------+
+| No.         | Step                                                                                        | Screenshot                          |
++=============+=============================================================================================+=====================================+
+| 1\.         | Load the respopagesextod2022.csv data file into Tableau Desktop                             | ![](images/image-1952342160.png) \| |
++-------------+---------------------------------------------------------------------------------------------+-------------------------------------+
+| 2\.         | Preview data under the \[Data Source\] tab. The data set contains 7 fields and 100927 rows. | ![](images/image-651906499.png)     |
+|             |                                                                                             |                                     |
+|             | Rename field name \[PA\] to \[Planning Area\] and \[AG\] to \[Age\] for easy reference.     | ![](images/image-1827499359.png)    |
++-------------+---------------------------------------------------------------------------------------------+-------------------------------------+
 
 ## 4.2 Create the Age-Sex Pyramid
 
-+-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------+
-| No.       | Step                                                                                                                                                                   | Screenshot                                   |
-+===========+========================================================================================================================================================================+==============================================+
-| 1\.       | Create a new Sheet 1. Drag \[Age\] to Rows. You will see a table with all the Ages in rows.                                                                            | ![](images/image-767376078.png){width="274"} |
-+-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------+
-| 2\.       | Right click on Data panel on left and create a calculated field with formula as the screenshot on left. Name the field as \[Male Pop\]. This create a new column which | ![](images/image-146338707.png)              |
-+-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------+
-| 3\.       | Create another calculated field \[Female Pop\] with the formula on the right.                                                                                          | ![](images/image-190523740.png)              |
-+-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------+
-| 4\.       | Drag the calculated field to columns. This will create two bar chart side by side.                                                                                     | ![](images/image-1634260166.png)             |
-|           |                                                                                                                                                                        |                                              |
-|           | Drag \[Sex\] to Colour and edit the color for Female and Male.                                                                                                         |                                              |
-+-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------+
-| 5\.       | Right click on \[Male Pop\] Axis, select edit axis and check the box for Reversed.                                                                                     | ![](images/image-473027779.png)              |
-|           |                                                                                                                                                                        |                                              |
-|           |                                                                                                                                                                        | ![](images/image-955319946.png)              |
-+-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------+
++----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------+
+| No.      | Step                                                                                                                                                                   | Screenshot                         |
++==========+========================================================================================================================================================================+====================================+
+| 1\.      | Create a new Sheet 1. Drag \[Age\] to Rows. You will see a table with all the Ages in rows.                                                                            | ![](images/image-767376078.png) \| |
++----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------+
+| 2\.      | Right click on Data panel on left and create a calculated field with formula as the screenshot on left. Name the field as \[Male Pop\]. This create a new column which | ![](images/image-146338707.png)    |
++----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------+
+| 3\.      | Create another calculated field \[Female Pop\] with the formula on the right.                                                                                          | ![](images/image-190523740.png)    |
++----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------+
+| 4\.      | Drag the calculated field to columns. This will create two bar chart side by side.                                                                                     | ![](images/image-1634260166.png)   |
+|          |                                                                                                                                                                        |                                    |
+|          | Drag \[Sex\] to Colour and edit the color for Female and Male.                                                                                                         |                                    |
++----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------+
+| 5\.      | Right click on \[Male Pop\] Axis, select edit axis and check the box for Reversed.                                                                                     | ![](images/image-473027779.png)    |
+|          |                                                                                                                                                                        |                                    |
+|          |                                                                                                                                                                        | ![](images/image-955319946.png)    |
++----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------+
 
 ## 4.3 Create trellis chart
 
-+--------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------+
-| No.    | Step                                                                                                                                                                                                                                                                       | Screenshot                                  |
-+========+============================================================================================================================================================================================================================================================================+=============================================+
-| 1\.    | Add one calculated field called \[Columns\] and another two calculated field called \[Rows\]. Formulas listed on the screenshot.                                                                                                                                           | ![](images/image-1798904991.png)            |
-+--------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------+
-| 2\.    | Drag \[Planning Area\] to filter                                                                                                                                                                                                                                           | ![](images/image-1866976888.png)            |
-+--------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------+
-| 3\.    | Select top 9 planning area with most population on the right filter                                                                                                                                                                                                        | ![](images/image-761056057.png){width="81"} |
-+--------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------+
-| 4\.    | Drag \[Columns\] to the Columns and \[Rows\] to Rows on top. A 3 x 3 table is created.                                                                                                                                                                                     | ![](images/image-2019932566.png)            |
-|        |                                                                                                                                                                                                                                                                            |                                             |
-|        | Select \[Column\] and choose Compute Using \[Planning Area\]. Repeat the same for \[Rows\]                                                                                                                                                                                 |                                             |
-+--------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------+
-| 5\.    | Under SUM(Female Pop) on the left panel, drag \[Planning Area\] to Label and check the box for show mark labels. Check the box for (Allow labels to overlap other marks) and (Label maximum label). The label for each planning area will appear on the top of each chart. | ![](images/image-416552956.png)             |
-+--------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------+
-| 6\.    | Double click on title and edit title. Also rename the worksheet name at the bottom to "Population pyramid by planning area"                                                                                                                                                | ![](images/image-189222166.png)             |
-+--------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------+
++-----------+----------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| No.       | Step                                                                                                                             | Screenshot                       |
++===========+==================================================================================================================================+==================================+
+| 1\.       | Add one calculated field called \[Columns\] and another two calculated field called \[Rows\]. Formulas listed on the screenshot. | ![](images/image-1798904991.png) |
++-----------+----------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 2\.       | Drag \[Planning Area\] to filter                                                                                                 | ![](images/image-1866976888.png) |
++-----------+----------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 3\.       | Select top 9 planning area with most population on the right filter                                                              | ![](images/image-761056057.png)  |
++-----------+----------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 4\.       | Drag \[Columns\] to the Columns and \[Rows\] to Rows on top. A 3 x 3 table is created.                                           | ![](images/image-2019932566.png) |
+|           |                                                                                                                                  |                                  |
+|           | Select \[Column\] and choose Compute Using \[Planning Area\]. Repeat the same for \[Rows\]                                       |                                  |
++-----------+----------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
 
-## 4.4 Create and Publish Dashboard
+## 4.4 Format Charts
 
-+------------+--------------------------------------------------------------------------------------------------------------------+-----------------------------------------------+
-| No.        | Step                                                                                                               | Screenshot                                    |
-+============+====================================================================================================================+===============================================+
-| 1\.        | Click on new Dashboard. Drag the "Population pyramid by planning area" worksheet to "Sheets" section on the left.  | ![](images/image-810599239.png)               |
-+------------+--------------------------------------------------------------------------------------------------------------------+-----------------------------------------------+
-| 2\.        | On the left bar, choose Automatic under Size. This is to allow the dashboard frame fits to different browser size. | ![](images/image-1148781027.png){width="122"} |
-+------------+--------------------------------------------------------------------------------------------------------------------+-----------------------------------------------+
-| 2\.        | Go to Data on the top navigation bar and choose Extract data. Press Extract in the dialog box.                     | ![](images/image-100369277.png){width="247"}  |
-+------------+--------------------------------------------------------------------------------------------------------------------+-----------------------------------------------+
-| 3\.        | Go to Sever at the top navigator bar and choose Tableau Public and Save to Tableau Public                          | ![](images/image-1845484120.png)              |
-+------------+--------------------------------------------------------------------------------------------------------------------+-----------------------------------------------+
-| 4\.        | The tableau dashboard is published under my tableau public account and a website is generated for share.           | ![](images/image-1487417313.png)              |
-+------------+--------------------------------------------------------------------------------------------------------------------+-----------------------------------------------+
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| No.     | Step                                                                                                                                                                                                                            | Screenshot                       |
++=========+=================================================================================================================================================================================================================================+==================================+
+| 1\.     | Create a calculated field called "Total Pop" using FIXED\[Planning Area\]. This is to calculate the total population for each planning area                                                                                     | ![](images/image-1121293406.png) |
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 2\.     | Under SUM(Female Pop) on the left panel, drag \[Planning Area\] and \[Total Pop\] to Label.                                                                                                                                     | ![](images/image-1939628531.png) |
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 3\.     | Under label, check the box for show mark labels. Check the box for (Allow labels to overlap other marks) and (Label maximum label). The label for each planning area and total population will appear on the top of each chart. | ![](images/image-1995303566.png) |
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 4\.     | Click on Tooltip and edit the information as screenshot                                                                                                                                                                         | ![](images/image-169236254.png)  |
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 5\.     | Right click the graph and choose format. Format the grid lines for column.                                                                                                                                                      | ![](images/image-213511136.png)  |
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 6\.     | Double click on title and edit title. Also rename the worksheet name at the bottom to "Population pyramid by planning area"                                                                                                     | ![](images/image-189222166.png)  |
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+
+## 4.5 Create and Publish Dashboard
+
++------------+--------------------------------------------------------------------------------------------------------------------+------------------------------------+
+| No.        | Step                                                                                                               | Screenshot                         |
++============+====================================================================================================================+====================================+
+| 1\.        | Click on new Dashboard. Drag the "Population pyramid by planning area" worksheet to "Sheets" section on the left.  | ![](images/image-810599239.png)    |
++------------+--------------------------------------------------------------------------------------------------------------------+------------------------------------+
+| 2\.        | On the left bar, choose Automatic under Size. This is to allow the dashboard frame fits to different browser size. | ![](images/image-1266361076.png)   |
++------------+--------------------------------------------------------------------------------------------------------------------+------------------------------------+
+| 3\.        | Go to Data on the top navigation bar and choose Extract data. Press Extract in the dialog box.                     | ![](images/image-100369277.png) \| |
++------------+--------------------------------------------------------------------------------------------------------------------+------------------------------------+
+| 4\.        | Go to Sever at the top navigator bar and choose Tableau Public and Save to Tableau Public                          | ![](images/image-1845484120.png)   |
++------------+--------------------------------------------------------------------------------------------------------------------+------------------------------------+
+| 5\.        | The tableau dashboard is published under my tableau public account and a website is generated for share.           | ![](images/image-1573887670.png)   |
++------------+--------------------------------------------------------------------------------------------------------------------+------------------------------------+
 
 # 5. Data Patterns
 
@@ -99,4 +115,49 @@ We can generate different insights on Singapore population structure with the vi
 
 All of the 9 Planning Area shared similar shape pattern which is similar to a "constrictive pyramid". The graph is narrow at the base which signals a declining birth rate and low fertility rate. Most of the graphs are wide at the middle which signals a high life expectancy and low mortality rate. The overall population could be reducing as a result.
 
+All the planning areas has a symmetric pattern, which signals that there are no age structure difference for male and female.
+
 ### Difference among planning areas
+
+Top 9 planning areas with the most population are selected for the dashboard. Most planning areas display a similar age pattern with a narrow top and narrow base. However, there are still some slight different pattern among some planning areas.
+
+#### 1. Punggol, Sengkang and Tampines
+
+In these 3 planning areas, most people are at their 35-45, which is younger that
+the other planning areas. At the same there are also a high number of children
+and new birth, which might indicates people that there are higher birth rate in
+those planning areas. However, there is a sharp decrease in age group of 20-29
+years old, which results in a pattern like Christmas tree.
+
+![](images/image-331791494.png)
+
+#### 2. Bedok and Jurong West
+
+Another 3 areas that demonstrates similar pattern are Bedok and Jurong West. These two
+districts both have higher population elder age group of 50-69 & 40-64,
+which might signal people are likely to stay in the same planning area until
+they age.
+
+![](images/image-221862328.png)
+
+### Mean, Median, Mode
+
+Although we are not able to see the mean and median in the population pyramid chart, we can observe the median of the 9 planning areas. Here are the mode for the 9 planning area:
+
+| Planning Area | Mode (Age group)               |
+|---------------|--------------------------------|
+| Bedok         | 60-64                          |
+| Chao Chu Kang | 45-49 (Male), 40-44 (Female)   |
+| Huogang       | 60-64                          |
+| Jurong West   | 45-49 (Male), 40-44 (Female)   |
+| Punggol       | 35-39                          |
+| Sengkang      | 40-44 (Male), 35-39 (Female)   |
+| Tampines      | 30-34                          |
+| Woodlands     | 25-29 (Female), 50-54 (Female) |
+| Yishun        | 30-34                          |
+
+Although we can see spot some pattern for planning area for younger population, most planning area are quite close in terms of mode. There are no clear insights base on the mode information.
+
+### Lesson Learnt
+
+Population pyramid gives us a good understand on an area birth rate, mortality rate, and dependency ratio. However, It might be more meaningful if we can compare the population distribution with other information such as education level, employment rate and income level for future studies. It would be interesting to also draw comparison with other countries' data to see if there are any similar pattern or distinct pattern of Singapore residence.
