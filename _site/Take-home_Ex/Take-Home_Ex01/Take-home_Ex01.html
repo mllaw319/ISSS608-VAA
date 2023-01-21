@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Law Man Long">
+<meta name="dcterms.date" content="2023-01-21">
+
+<title>ISSS608-VAA - Take Home Exercise</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">ISSS608-VAA</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hands-on-exercise" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Hands-on Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hands-on-exercise">    
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_ex/Hands-on_Ex01/Hands-on_Ex01.html">
+ <span class="dropdown-text">Hands-on Exercise 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_ex/Hands-on_Ex02/Hands-on_Ex02.html">
+ <span class="dropdown-text">Hands-on Exercise 2</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-take-home-exercise" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Take-home Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-take-home-exercise">    
+        <li>
+    <a class="dropdown-item" href="../../Take-home_Ex/Take-Home_Ex01/Take-home_Ex01.html">
+ <span class="dropdown-text">Take-home Exercise 1</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#dashboard-description" id="toc-dashboard-description" class="nav-link active" data-scroll-target="#dashboard-description">1. Dashboard Description</a></li>
+  <li><a href="#the-data" id="toc-the-data" class="nav-link" data-scroll-target="#the-data">2. The Data</a></li>
+  <li><a href="#dashboard" id="toc-dashboard" class="nav-link" data-scroll-target="#dashboard">3. Dashboard</a></li>
+  <li><a href="#step-by-step-procedures" id="toc-step-by-step-procedures" class="nav-link" data-scroll-target="#step-by-step-procedures">4. Step-by-Step Procedures</a>
+  <ul class="collapse">
+  <li><a href="#import-data" id="toc-import-data" class="nav-link" data-scroll-target="#import-data">4.1 Import data</a></li>
+  <li><a href="#create-the-age-sex-pyramid" id="toc-create-the-age-sex-pyramid" class="nav-link" data-scroll-target="#create-the-age-sex-pyramid">4.2 Create the Age-Sex Pyramid</a></li>
+  <li><a href="#create-trellis-chart" id="toc-create-trellis-chart" class="nav-link" data-scroll-target="#create-trellis-chart">4.3 Create trellis chart</a></li>
+  <li><a href="#create-and-publish-dashboard" id="toc-create-and-publish-dashboard" class="nav-link" data-scroll-target="#create-and-publish-dashboard">4.4 Create and Publish Dashboard</a></li>
+  </ul></li>
+  <li><a href="#data-patterns" id="toc-data-patterns" class="nav-link" data-scroll-target="#data-patterns">5. Data Patterns</a>
+  <ul class="collapse">
+  <li><a href="#overall-pattern" id="toc-overall-pattern" class="nav-link" data-scroll-target="#overall-pattern">Overall pattern</a></li>
+  <li><a href="#difference-among-planning-areas" id="toc-difference-among-planning-areas" class="nav-link" data-scroll-target="#difference-among-planning-areas">Difference among planning areas</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Take Home Exercise</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Law Man Long </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 21, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="dashboard-description" class="level1">
+<h1>1. Dashboard Description</h1>
+<p>This purpose of the dashboard is to show the demographic structure of Singapore at planning area level by gender and age group using age-sex pyramid method. Nine selected planning areas is displayed on a single view by using trellis display.</p>
+</section>
+<section id="the-data" class="level1">
+<h1>2. The Data</h1>
+<p><em>Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022</em> should be used to prepare the analytical visualisation. Data can be accessed <a href="https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data">here</a>.</p>
+</section>
+<section id="dashboard" class="level1">
+<h1>3. Dashboard</h1>
+<p>Below is the tableau dashboard. You can access <a href="https://public.tableau.com/app/profile/law.man.long/viz/Take-home_Ex1/SingaporePopulationPyramid?publish=yes">here</a> if the dashboard is not properly displayed.</p>
+
+<div class="tableauPlaceholder" id="viz1674226598160" style="position: relative"><noscript><a href="#"><img alt="Singapore Population Pyramid " src="https://public.tableau.com/static/images/Ta/Take-home_Ex1/SingaporePopulationPyramid/1_rss.png" style="border: none"></a></noscript><object class="tableauViz" style="display:none;"><param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F"> <param name="embed_code_version" value="3"> <param name="site_root" value=""><param name="name" value="Take-home_Ex1/SingaporePopulationPyramid"><param name="tabs" value="no"><param name="toolbar" value="yes"><param name="static_image" value="https://public.tableau.com/static/images/Ta/Take-home_Ex1/SingaporePopulationPyramid/1.png"> <param name="animate_transition" value="yes"><param name="display_static_image" value="yes"><param name="display_spinner" value="yes"><param name="display_overlay" value="yes"><param name="display_count" value="yes"><param name="language" value="en-US"></object></div>                <script type="text/javascript">                    var divElement = document.getElementById('viz1674226598160');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='727px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+</section>
+<section id="step-by-step-procedures" class="level1">
+<h1>4. Step-by-Step Procedures</h1>
+<p>The section details the steps required to produce the geographic distribution dashboard in section 3.</p>
+<section id="import-data" class="level2">
+<h2 class="anchored" data-anchor-id="import-data">4.1 Import data</h2>
+<table class="table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 59%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>No.</th>
+<th>Step</th>
+<th>Screenshot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.</td>
+<td>Load the respopagesextod2022.csv data file into Tableau Desktop</td>
+<td><img src="images/image-1952342160.png" class="img-fluid" width="291"></td>
+</tr>
+<tr class="even">
+<td>2.</td>
+<td><p>Preview data under the [Data Source] tab. The data set contains 7 fields and 100927 rows.</p>
+<p>Rename field name [PA] to [Planning Area] and [AG] to [Age] for easy reference.</p></td>
+<td><p><img src="images/image-651906499.png" class="img-fluid"></p>
+<p><img src="images/image-1827499359.png" class="img-fluid"></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="create-the-age-sex-pyramid" class="level2">
+<h2 class="anchored" data-anchor-id="create-the-age-sex-pyramid">4.2 Create the Age-Sex Pyramid</h2>
+<table class="table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 73%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>No.</th>
+<th>Step</th>
+<th>Screenshot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.</td>
+<td>Create a new Sheet 1. Drag [Age] to Rows. You will see a table with all the Ages in rows.</td>
+<td><img src="images/image-767376078.png" class="img-fluid" width="274"></td>
+</tr>
+<tr class="even">
+<td>2.</td>
+<td>Right click on Data panel on left and create a calculated field with formula as the screenshot on left. Name the field as [Male Pop]. This create a new column which</td>
+<td><img src="images/image-146338707.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>3.</td>
+<td>Create another calculated field [Female Pop] with the formula on the right.</td>
+<td><img src="images/image-190523740.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>4.</td>
+<td><p>Drag the calculated field to columns. This will create two bar chart side by side.</p>
+<p>Drag [Sex] to Colour and edit the color for Female and Male.</p></td>
+<td><img src="images/image-1634260166.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>5.</td>
+<td>Right click on [Male Pop] Axis, select edit axis and check the box for Reversed.</td>
+<td><p><img src="images/image-473027779.png" class="img-fluid"></p>
+<p><img src="images/image-955319946.png" class="img-fluid"></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="create-trellis-chart" class="level2">
+<h2 class="anchored" data-anchor-id="create-trellis-chart">4.3 Create trellis chart</h2>
+<table class="table">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 82%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>No.</th>
+<th>Step</th>
+<th>Screenshot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.</td>
+<td>Add one calculated field called [Columns] and another two calculated field called [Rows]. Formulas listed on the screenshot.</td>
+<td><img src="images/image-1798904991.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>2.</td>
+<td>Drag [Planning Area] to filter</td>
+<td><img src="images/image-1866976888.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>3.</td>
+<td>Select top 9 planning area with most population on the right filter</td>
+<td><img src="images/image-761056057.png" class="img-fluid" width="81"></td>
+</tr>
+<tr class="even">
+<td>4.</td>
+<td><p>Drag [Columns] to the Columns and [Rows] to Rows on top. A 3 x 3 table is created.</p>
+<p>Select [Column] and choose Compute Using [Planning Area]. Repeat the same for [Rows]</p></td>
+<td><img src="images/image-2019932566.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>5.</td>
+<td>Under SUM(Female Pop) on the left panel, drag [Planning Area] to Label and check the box for show mark labels. Check the box for (Allow labels to overlap other marks) and (Label maximum label). The label for each planning area will appear on the top of each chart.</td>
+<td><img src="images/image-416552956.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>6.</td>
+<td>Double click on title and edit title. Also rename the worksheet name at the bottom to “Population pyramid by planning area”</td>
+<td><img src="images/image-189222166.png" class="img-fluid"></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="create-and-publish-dashboard" class="level2">
+<h2 class="anchored" data-anchor-id="create-and-publish-dashboard">4.4 Create and Publish Dashboard</h2>
+<table class="table">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 65%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>No.</th>
+<th>Step</th>
+<th>Screenshot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.</td>
+<td>Click on new Dashboard. Drag the “Population pyramid by planning area” worksheet to “Sheets” section on the left.</td>
+<td><img src="images/image-810599239.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>2.</td>
+<td>On the left bar, choose Automatic under Size. This is to allow the dashboard frame fits to different browser size.</td>
+<td><img src="images/image-1148781027.png" class="img-fluid" width="122"></td>
+</tr>
+<tr class="odd">
+<td>2.</td>
+<td>Go to Data on the top navigation bar and choose Extract data. Press Extract in the dialog box.</td>
+<td><img src="images/image-100369277.png" class="img-fluid" width="247"></td>
+</tr>
+<tr class="even">
+<td>3.</td>
+<td>Go to Sever at the top navigator bar and choose Tableau Public and Save to Tableau Public</td>
+<td><img src="images/image-1845484120.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>4.</td>
+<td>The tableau dashboard is published under my tableau public account and a website is generated for share.</td>
+<td><img src="images/image-1487417313.png" class="img-fluid"></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="data-patterns" class="level1">
+<h1>5. Data Patterns</h1>
+<p>We can generate different insights on Singapore population structure with the visualisation. Here are few observation.</p>
+<section id="overall-pattern" class="level3">
+<h3 class="anchored" data-anchor-id="overall-pattern">Overall pattern</h3>
+<p>All of the 9 Planning Area shared similar shape pattern which is similar to a “constrictive pyramid”. The graph is narrow at the base which signals a declining birth rate and low fertility rate. Most of the graphs are wide at the middle which signals a high life expectancy and low mortality rate. The overall population could be reducing as a result.</p>
+</section>
+<section id="difference-among-planning-areas" class="level3">
+<h3 class="anchored" data-anchor-id="difference-among-planning-areas">Difference among planning areas</h3>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

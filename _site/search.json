@@ -19,5 +19,61 @@
     "title": "Hands-on Exercise 1",
     "section": "",
     "text": "The code chunk below uses p_load() of pacman package to check if tidyverse packages is installed in the computer. If yes, then they will be launched into R.\n\npacman::p_load(tidyverse)\n\n\n\n\n\nexam_data <- read_csv(\"data/Exam_data.csv\")\n\nRows: 322 Columns: 7\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (4): ID, CLASS, GENDER, RACE\ndbl (3): ENGLISH, MATHS, SCIENCE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-Home_Ex01/Take-home_Ex01.html",
+    "href": "Take-home_Ex/Take-Home_Ex01/Take-home_Ex01.html",
+    "title": "Take Home Exercise",
+    "section": "",
+    "text": "This purpose of the dashboard is to show the demographic structure of Singapore at planning area level by gender and age group using age-sex pyramid method. Nine selected planning areas is displayed on a single view by using trellis display."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-Home_Ex01/Take-home_Ex01.html#import-data",
+    "href": "Take-home_Ex/Take-Home_Ex01/Take-home_Ex01.html#import-data",
+    "title": "Take Home Exercise",
+    "section": "4.1 Import data",
+    "text": "4.1 Import data\n\n\n\n\n\n\n\n\nNo.\nStep\nScreenshot\n\n\n\n\n1.\nLoad the respopagesextod2022.csv data file into Tableau Desktop\n\n\n\n2.\nPreview data under the [Data Source] tab. The data set contains 7 fields and 100927 rows.\nRename field name [PA] to [Planning Area] and [AG] to [Age] for easy reference."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-Home_Ex01/Take-home_Ex01.html#create-the-age-sex-pyramid",
+    "href": "Take-home_Ex/Take-Home_Ex01/Take-home_Ex01.html#create-the-age-sex-pyramid",
+    "title": "Take Home Exercise",
+    "section": "4.2 Create the Age-Sex Pyramid",
+    "text": "4.2 Create the Age-Sex Pyramid\n\n\n\n\n\n\n\n\nNo.\nStep\nScreenshot\n\n\n\n\n1.\nCreate a new Sheet 1. Drag [Age] to Rows. You will see a table with all the Ages in rows.\n\n\n\n2.\nRight click on Data panel on left and create a calculated field with formula as the screenshot on left. Name the field as [Male Pop]. This create a new column which\n\n\n\n3.\nCreate another calculated field [Female Pop] with the formula on the right.\n\n\n\n4.\nDrag the calculated field to columns. This will create two bar chart side by side.\nDrag [Sex] to Colour and edit the color for Female and Male.\n\n\n\n5.\nRight click on [Male Pop] Axis, select edit axis and check the box for Reversed."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-Home_Ex01/Take-home_Ex01.html#create-trellis-chart",
+    "href": "Take-home_Ex/Take-Home_Ex01/Take-home_Ex01.html#create-trellis-chart",
+    "title": "Take Home Exercise",
+    "section": "4.3 Create trellis chart",
+    "text": "4.3 Create trellis chart\n\n\n\n\n\n\n\n\nNo.\nStep\nScreenshot\n\n\n\n\n1.\nAdd one calculated field called [Columns] and another two calculated field called [Rows]. Formulas listed on the screenshot.\n\n\n\n2.\nDrag [Planning Area] to filter\n\n\n\n3.\nSelect top 9 planning area with most population on the right filter\n\n\n\n4.\nDrag [Columns] to the Columns and [Rows] to Rows on top. A 3 x 3 table is created.\nSelect [Column] and choose Compute Using [Planning Area]. Repeat the same for [Rows]\n\n\n\n5.\nUnder SUM(Female Pop) on the left panel, drag [Planning Area] to Label and check the box for show mark labels. Check the box for (Allow labels to overlap other marks) and (Label maximum label). The label for each planning area will appear on the top of each chart.\n\n\n\n6.\nDouble click on title and edit title. Also rename the worksheet name at the bottom to “Population pyramid by planning area”"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-Home_Ex01/Take-home_Ex01.html#create-and-publish-dashboard",
+    "href": "Take-home_Ex/Take-Home_Ex01/Take-home_Ex01.html#create-and-publish-dashboard",
+    "title": "Take Home Exercise",
+    "section": "4.4 Create and Publish Dashboard",
+    "text": "4.4 Create and Publish Dashboard\n\n\n\n\n\n\n\n\nNo.\nStep\nScreenshot\n\n\n\n\n1.\nClick on new Dashboard. Drag the “Population pyramid by planning area” worksheet to “Sheets” section on the left.\n\n\n\n2.\nOn the left bar, choose Automatic under Size. This is to allow the dashboard frame fits to different browser size.\n\n\n\n2.\nGo to Data on the top navigation bar and choose Extract data. Press Extract in the dialog box.\n\n\n\n3.\nGo to Sever at the top navigator bar and choose Tableau Public and Save to Tableau Public\n\n\n\n4.\nThe tableau dashboard is published under my tableau public account and a website is generated for share."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-Home_Ex01/Take-home_Ex01.html#negative-growth",
+    "href": "Take-home_Ex/Take-Home_Ex01/Take-home_Ex01.html#negative-growth",
+    "title": "Take Home Exercise",
+    "section": "Negative growth",
+    "text": "Negative growth\nAll of the 9 Planning Area shared similar age pattern."
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html",
+    "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html",
+    "title": "Hands on Exercise 2",
+    "section": "",
+    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#running-code",
+    "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#running-code",
+    "title": "Hands on Exercise 2",
+    "section": "Running Code",
+    "text": "Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
   }
 ]
