@@ -1,6 +1,8 @@
 ---
 title: "Hands-on Exercise 1"
 author: "Law Man Long"
+date: "28 January 2023"
+date modified: "`r Sys.Date()`"
 ---
 
 # Getting Started
