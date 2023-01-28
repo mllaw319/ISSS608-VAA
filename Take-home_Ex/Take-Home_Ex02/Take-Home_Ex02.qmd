@@ -2,6 +2,14 @@
 title: "Take Home Exercise 2"
 author: "Law Man Long"
 date: "`r Sys.Date()`"
+execute: 
+  echo: true
+  eval: true
+  results: hide
+  message: false
+  warning: false
+format: html
+editor: visual
 ---
 
 # 1. Overview
@@ -42,17 +50,19 @@ The original dashboard show the demographic structure of Singapore for top 9 mos
 
 # 3. Proposed Sketch
 
+Below sketches are created to illustrate the ideal data visualisation for ggplot2.
+
 ## 3.1 Pareto Chart
 
-### Aesthetics
+![](images/IMG-0719-reduced.jpg)
 
-### Clarity
+Pareto chart is used to illustrate the overall population of Singapore residents by planning area, and how much percentage that the top 9 planning areas represent. It gives a good idea on the significance of top populated areas within Singapore.
 
 ## 3.2 Age-Sex Population Pyramid
 
-### Aesthetics
+![](images/IMG-0720-reduced.jpg)
 
-### Clarity
+We keep the age-sex populated pyramid, but will improve in terms of the aesthetics and clarity. The key focus will be put on identifying the difference of planning area against the overall Singapore population.
 
 # 4. Remake
 
@@ -106,7 +116,15 @@ head(total_pop)
 
 Pareto chart shows the population of planning area in descending order and cumulative percentage. This is to illustrate which are the top populated areas in Singapore and identify the most significant area for later analysis. Pareto chart was plotted using ggplot2 as follows:
 
-```{r}
+-   geom_col() is used to create the bars and color and width is adjust for neater look
+
+-   geom_point() & geom_line is used to plot the line for cumulative percentage
+
+-   scale_y\_continuous is used for to create secondary axis for the cumulative percentage of population
+
+-   theme() is adjusted to standardize axis text and title for neater look
+
+```{r, results='hide'}
 ggplot(data = total_pop, aes(x = reorder(PA, -totalpop))) +
   geom_col(aes(y=totalpop), fill = 'lightblue', width= 0.8) +
   geom_point(aes(y=cumpop*278640), color = 'grey20', linewidth = 0.8) +
@@ -129,7 +147,7 @@ A sex-age population pyramid shows the distribution of population by age groups 
 
 We are going to compute the percentage of particular planning area population by gender and age. Below are the codes to transform the data.
 
-1.  Summarize population by planning area, sex and age group
+1.  Summarize population by planning area, sex and age group and rearrange the order of age group
 
 ```{r}
 order <- c("0_to_4", "5_to_9", "10_to_14", "15_to_19", "20_to_24", "25_to_29", "30_to_34", "35_to_39", "40_to_44", "45_to_49", "50_to_54", "55_to_59", "60_to_64", "65_to_69", "70_to_74", "75_to_79", "80_to_84", "85_to_89", "90_and_over")
@@ -139,7 +157,8 @@ pyramid <- pop_data %>%
   mutate(AG =  factor(AG, levels = order)) %>%
   arrange(AG) %>%
   group_by(PA, Sex, AG) %>%
-  summarise(pymd_pop = sum(Pop))
+  summarise(pymd_pop = sum(Pop)) %>%
+  mutate(grandpop=grandpop)
 head(pyramid)
 ```
 
@@ -147,25 +166,95 @@ head(pyramid)
 
 ```{r}
 total_pop_PA <- total_pop |> select(PA, totalpop)
-head(total_pop_PA)
 ```
 
 3.  Join the two data frame to form a data set with population by planning area and population by planning area, age group and sex. Calculate the percentage with the two columns.
+4.  Create a data frame for the overall population
 
 ```{r}
 joined_tab <- left_join(pyramid, total_pop_PA,
                         by = c('PA' = 'PA')) %>%
   mutate(pymd_pop_perc = pymd_pop/totalpop)
-head(joined_tab)
+
+topdata <- top_n(total_pop_PA, n=9, totalpop)
+
+```
+
+5.  Prepare data for the overall population pyramid by grouping data by sex and age, and summarize the population
+
+```{r}
+overall_pyramid <- pop_data %>%
+  filter(Pop != 0) %>%
+  mutate(AG =  factor(AG, levels = order)) %>%
+  arrange(AG) %>%
+  group_by(Sex, AG) %>%
+  summarise(pymd_pop = sum(Pop)) %>%
+  mutate(totalpop=grandpop)
 ```
 
 ### 4.4.2 Plot Population Pyramid in Trellis View
 
-```{r}
-ggplot(joined_tab, aes(x = ifelse(Sex == "Males", yes = -pymd_pop_perc, no = pymd_pop_perc), 
-                          y = AG, fill = Sex)) + 
-geom_col()
+The population pyramid was plot using ggplot as follows:
 
+-   geom_col() was used to create the bar chart, and ifelse() is used to convert male population percentage to the left of the graph and female to the right.
+
+-   Formula of pymd_pop/totalpop is used to calculate the population percentage for each age group and sex.
+
+-   The color and format of overall population pyramid is adjusted to lighter grey for easier reading
+
+-   labs() was used to assign main title and axis titles.
+
+-   scale_x\_continuous() is used to tidy up the the x axis label for clarity
+
+-   theme() is used to adjust font size and position for neater look
+
+```{r, fig.width=10,fig.height=11}
+
+d <- joined_tab %>% filter(PA %in% topdata$PA)
+
+ggplot(d, aes(x = ifelse(Sex == "Males", yes = -(pymd_pop/totalpop), no = pymd_pop/totalpop), y = AG, fill = Sex)) + 
+                          geom_col(data = overall_pyramid, fill = 'grey') + 
+                          geom_col(color = "black", alpha = .5) +
+                          facet_wrap(~ PA) +
+  labs (x = "Population percentage", y = "Age", title='Singapore Age-Sex Population Pyramid by Planning Area in Jun 2022') +
+  scale_x_continuous(breaks = seq(-0.06, 0.06, 0.02), labels = abs(seq(-0.06, 0.06, 0.02))) +
+  theme_bw() +
+  theme(axis.ticks.y = element_blank(),
+        plot.title = element_text(hjust = 0.5, size = 22),
+        axis.title = element_text(size = 14),
+        strip.text = element_text(size = 14))
 ```
 
+## 4.5 Data Insights
+
+-   With the new Pareto chart, we are able to identify the top 9 populated areas in Singapore, which make up on more than 50% of total Singapore population
+
+-   With the remake Age-Sex pyramid, we can observe more patterns from different planning area:
+
+    -   Punggol and Tampines have very different age-sex pattern with the overall Singapore population and the rest of the planning areas
+
+    -   Jurong West has a similar age-sex pattern with overall population
+
+    -   Sengkang, Punggol and Tampines have relatively higher younger population
+
+    -   Hougang, Jurong West and Bedok has more 60 years or above population
+
 # 5. Learning Point
+
+## Aesthetics
+
+-   When there is multiple chart of elements on the same graph, it is important to adjust the color of the chart to shows what is the primary information (planning area population) and secondary information (overall population)
+
+-   Color should be used to contrast important information and should be used carefully
+
+-   Simple background is preferred when there are multiple graphs in the same view
+
+## Clarity
+
+-   Some insights might be lost if we group data unnecessarily, for example the age group pattern will be lost if we group the different age groups together
+
+-   Not all data labels should be shown, sometimes simple is beauty
+
+-   Data comparison is a good way to draw additional insights in our graphs, for example we compare overall population with planning area population for more insights
+
+-   Data visualisation is about trial and error. Sometimes you have to go through many iteration in order to have the best outcome. It is important to be patient during the process.

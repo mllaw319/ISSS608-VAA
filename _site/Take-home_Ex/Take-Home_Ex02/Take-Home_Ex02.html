@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Law Man Long">
-<meta name="dcterms.date" content="2023-01-28">
+<meta name="dcterms.date" content="2023-01-29">
 
 <title>ISSS608-VAA - Take Home Exercise 2</title>
 <style>
@@ -168,6 +168,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="dropdown-item" href="../../Take-home_Ex/Take-Home_Ex01/Take-home_Ex01.html">
  <span class="dropdown-text">Take-home Exercise 1</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../Take-home_Ex/Take-Home_Ex01/Take-home_Ex02.html">
+ <span class="dropdown-text">Take-home Exercise 2</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -214,16 +218,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#proposed-sketch" id="toc-proposed-sketch" class="nav-link" data-scroll-target="#proposed-sketch">3. Proposed Sketch</a>
   <ul class="collapse">
-  <li><a href="#pareto-chart" id="toc-pareto-chart" class="nav-link" data-scroll-target="#pareto-chart">3.1 Pareto Chart</a>
-  <ul class="collapse">
-  <li><a href="#aesthetics-1" id="toc-aesthetics-1" class="nav-link" data-scroll-target="#aesthetics-1">Aesthetics</a></li>
-  <li><a href="#clarity-1" id="toc-clarity-1" class="nav-link" data-scroll-target="#clarity-1">Clarity</a></li>
-  </ul></li>
-  <li><a href="#age-sex-population-pyramid" id="toc-age-sex-population-pyramid" class="nav-link" data-scroll-target="#age-sex-population-pyramid">3.2 Age-Sex Population Pyramid</a>
-  <ul class="collapse">
-  <li><a href="#aesthetics-2" id="toc-aesthetics-2" class="nav-link" data-scroll-target="#aesthetics-2">Aesthetics</a></li>
-  <li><a href="#clarity-2" id="toc-clarity-2" class="nav-link" data-scroll-target="#clarity-2">Clarity</a></li>
-  </ul></li>
+  <li><a href="#pareto-chart" id="toc-pareto-chart" class="nav-link" data-scroll-target="#pareto-chart">3.1 Pareto Chart</a></li>
+  <li><a href="#age-sex-population-pyramid" id="toc-age-sex-population-pyramid" class="nav-link" data-scroll-target="#age-sex-population-pyramid">3.2 Age-Sex Population Pyramid</a></li>
   </ul></li>
   <li><a href="#remake" id="toc-remake" class="nav-link" data-scroll-target="#remake">4. Remake</a>
   <ul class="collapse">
@@ -241,8 +237,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#compute-the-population-percentage-by-age-and-sex" id="toc-compute-the-population-percentage-by-age-and-sex" class="nav-link" data-scroll-target="#compute-the-population-percentage-by-age-and-sex">Compute the population percentage by age and sex</a></li>
   <li><a href="#plot-population-pyramid-in-trellis-view" id="toc-plot-population-pyramid-in-trellis-view" class="nav-link" data-scroll-target="#plot-population-pyramid-in-trellis-view">4.4.2 Plot Population Pyramid in Trellis View</a></li>
   </ul></li>
+  <li><a href="#data-insights" id="toc-data-insights" class="nav-link" data-scroll-target="#data-insights">4.5 Data Insights</a></li>
   </ul></li>
-  <li><a href="#learning-point" id="toc-learning-point" class="nav-link" data-scroll-target="#learning-point">5. Learning Point</a></li>
+  <li><a href="#learning-point" id="toc-learning-point" class="nav-link" data-scroll-target="#learning-point">5. Learning Point</a>
+  <ul class="collapse">
+  <li><a href="#aesthetics-1" id="toc-aesthetics-1" class="nav-link" data-scroll-target="#aesthetics-1">Aesthetics</a></li>
+  <li><a href="#clarity-1" id="toc-clarity-1" class="nav-link" data-scroll-target="#clarity-1">Clarity</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -268,7 +269,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 28, 2023</p>
+      <p class="date">January 29, 2023</p>
     </div>
   </div>
   
@@ -310,23 +311,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="proposed-sketch" class="level1">
 <h1>3. Proposed Sketch</h1>
+<p>Below sketches are created to illustrate the ideal data visualisation for ggplot2.</p>
 <section id="pareto-chart" class="level2">
 <h2 class="anchored" data-anchor-id="pareto-chart">3.1 Pareto Chart</h2>
-<section id="aesthetics-1" class="level3">
-<h3 class="anchored" data-anchor-id="aesthetics-1">Aesthetics</h3>
-</section>
-<section id="clarity-1" class="level3">
-<h3 class="anchored" data-anchor-id="clarity-1">Clarity</h3>
-</section>
+<p><img src="images/IMG-0719-reduced.jpg" class="img-fluid"></p>
+<p>Pareto chart is used to illustrate the overall population of Singapore residents by planning area, and how much percentage that the top 9 planning areas represent. It gives a good idea on the significance of top populated areas within Singapore.</p>
 </section>
 <section id="age-sex-population-pyramid" class="level2">
 <h2 class="anchored" data-anchor-id="age-sex-population-pyramid">3.2 Age-Sex Population Pyramid</h2>
-<section id="aesthetics-2" class="level3">
-<h3 class="anchored" data-anchor-id="aesthetics-2">Aesthetics</h3>
-</section>
-<section id="clarity-2" class="level3">
-<h3 class="anchored" data-anchor-id="clarity-2">Clarity</h3>
-</section>
+<p><img src="images/IMG-0720-reduced.jpg" class="img-fluid"></p>
+<p>We keep the age-sex populated pyramid, but will improve in terms of the aesthetics and clarity. The key focus will be put on identifying the difference of planning area against the overall Singapore population.</p>
 </section>
 </section>
 <section id="remake" class="level1">
@@ -343,18 +337,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="import-data">4.2 Import Data</h2>
 <p>Data set named “respopagesextod2022” is used for the exercise below. Data is import using readr package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pop_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/respopagesextod2022.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 100928 Columns: 7
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (5): PA, SZ, AG, Sex, TOD
-dbl (2): Pop, Time
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pop_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pop_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/respopagesextod2022.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pop_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 7
   PA         SZ                     AG     Sex   TOD                   Pop  Time
@@ -377,20 +361,20 @@ dbl (2): Pop, Time
 <h3 class="anchored" data-anchor-id="compute-cumulative-percentage-by-planning-area">Compute cumulative percentage by planning area</h3>
 <p>Below code chunk is used to calculate total population of Singapore</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>grandpop <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">sum</span>(pop_data<span class="sc">$</span>Pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>grandpop <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">sum</span>(pop_data<span class="sc">$</span>Pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Below code chunk is used to calculate the cumulative population percentage of each planning area. It filters all the 0 in population, group the data by planning area and summarize the population, and then create a new column for total population, which later sort into descending order and calculate the cumulative percentage of total population.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>total_pop <span class="ot">&lt;-</span> pop_data <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Pop <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PA) <span class="sc">%&gt;%</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">totalpop =</span> <span class="fu">sum</span>(Pop)) <span class="sc">%&gt;%</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grandpop=</span>grandpop) <span class="sc">%&gt;%</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(totalpop)) <span class="sc">%&gt;%</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percpop =</span> totalpop<span class="sc">/</span>grandpop) <span class="sc">%&gt;%</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cumpop =</span> <span class="fu">cumsum</span>(percpop)) <span class="sc">%&gt;%</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cumabspop =</span> <span class="fu">cumsum</span>(totalpop))</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(total_pop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>total_pop <span class="ot">&lt;-</span> pop_data <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Pop <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PA) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">totalpop =</span> <span class="fu">sum</span>(Pop)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grandpop=</span>grandpop) <span class="sc">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(totalpop)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percpop =</span> totalpop<span class="sc">/</span>grandpop) <span class="sc">%&gt;%</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cumpop =</span> <span class="fu">cumsum</span>(percpop)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cumabspop =</span> <span class="fu">cumsum</span>(totalpop))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(total_pop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 6
   PA          totalpop grandpop percpop cumpop cumabspop
@@ -407,25 +391,23 @@ dbl (2): Pop, Time
 <section id="plot-pareto-chart" class="level3">
 <h3 class="anchored" data-anchor-id="plot-pareto-chart">4.3.2 Plot Pareto Chart</h3>
 <p>Pareto chart shows the population of planning area in descending order and cumulative percentage. This is to illustrate which are the top populated areas in Singapore and identify the most significant area for later analysis. Pareto chart was plotted using ggplot2 as follows:</p>
+<ul>
+<li><p>geom_col() is used to create the bars and color and width is adjust for neater look</p></li>
+<li><p>geom_point() &amp; geom_line is used to plot the line for cumulative percentage</p></li>
+<li><p>scale_y_continuous is used for to create secondary axis for the cumulative percentage of population</p></li>
+<li><p>theme() is adjusted to standardize axis text and title for neater look</p></li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> total_pop, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(PA, <span class="sc">-</span>totalpop))) <span class="sc">+</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">y=</span>totalpop), <span class="at">fill =</span> <span class="st">'lightblue'</span>, <span class="at">width=</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>cumpop<span class="sc">*</span><span class="dv">278640</span>), <span class="at">color =</span> <span class="st">'grey20'</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>cumpop<span class="sc">*</span><span class="dv">278640</span>, <span class="at">group =</span> <span class="dv">1</span>), <span class="at">colour =</span> <span class="st">'grey20'</span>, <span class="at">size =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Planning Areas"</span>, <span class="at">title =</span> <span class="st">"Pareto chart of population by planning area"</span>) <span class="sc">+</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">'Population'</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">300000</span>, <span class="dv">50000</span>), <span class="at">minor_breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">300000</span>, <span class="dv">50000</span>),</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">sec.axis =</span> <span class="fu">sec_axis</span>(<span class="sc">~</span>.<span class="sc">*</span><span class="dv">1</span><span class="sc">/</span><span class="dv">278640</span>, <span class="at">name =</span> <span class="st">'Cumulative Percentage of Population'</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.1</span>), <span class="at">labels =</span> scales<span class="sc">::</span>percent) </span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">hjust=</span><span class="dv">1</span>), <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in geom_point(aes(y = cumpop * 278640), color = "grey20", linewidth =
-0.8): Ignoring unknown parameters: `linewidth`</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> total_pop, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(PA, <span class="sc">-</span>totalpop))) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">y=</span>totalpop), <span class="at">fill =</span> <span class="st">'lightblue'</span>, <span class="at">width=</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>cumpop<span class="sc">*</span><span class="dv">278640</span>), <span class="at">color =</span> <span class="st">'grey20'</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>cumpop<span class="sc">*</span><span class="dv">278640</span>, <span class="at">group =</span> <span class="dv">1</span>), <span class="at">colour =</span> <span class="st">'grey20'</span>, <span class="at">size =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Planning Areas"</span>, <span class="at">title =</span> <span class="st">"Pareto chart of population by planning area"</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">'Population'</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">300000</span>, <span class="dv">50000</span>), <span class="at">minor_breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">300000</span>, <span class="dv">50000</span>),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">sec.axis =</span> <span class="fu">sec_axis</span>(<span class="sc">~</span>.<span class="sc">*</span><span class="dv">1</span><span class="sc">/</span><span class="dv">278640</span>, <span class="at">name =</span> <span class="st">'Cumulative Percentage of Population'</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.1</span>), <span class="at">labels =</span> scales<span class="sc">::</span>percent) </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">hjust=</span><span class="dv">1</span>), <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Take-Home_Ex02_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -442,92 +424,128 @@ dbl (2): Pop, Time
 <h3 class="anchored" data-anchor-id="compute-the-population-percentage-by-age-and-sex">Compute the population percentage by age and sex</h3>
 <p>We are going to compute the percentage of particular planning area population by gender and age. Below are the codes to transform the data.</p>
 <ol type="1">
-<li>Summarize population by planning area, sex and age group</li>
+<li>Summarize population by planning area, sex and age group and rearrange the order of age group</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>order <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"0_to_4"</span>, <span class="st">"5_to_9"</span>, <span class="st">"10_to_14"</span>, <span class="st">"15_to_19"</span>, <span class="st">"20_to_24"</span>, <span class="st">"25_to_29"</span>, <span class="st">"30_to_34"</span>, <span class="st">"35_to_39"</span>, <span class="st">"40_to_44"</span>, <span class="st">"45_to_49"</span>, <span class="st">"50_to_54"</span>, <span class="st">"55_to_59"</span>, <span class="st">"60_to_64"</span>, <span class="st">"65_to_69"</span>, <span class="st">"70_to_74"</span>, <span class="st">"75_to_79"</span>, <span class="st">"80_to_84"</span>, <span class="st">"85_to_89"</span>, <span class="st">"90_and_over"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>pyramid <span class="ot">&lt;-</span> pop_data <span class="sc">%&gt;%</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Pop <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AG =</span>  <span class="fu">factor</span>(AG, <span class="at">levels =</span> order)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(AG) <span class="sc">%&gt;%</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PA, Sex, AG) <span class="sc">%&gt;%</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">pymd_pop =</span> <span class="fu">sum</span>(Pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'PA', 'Sex'. You can override using the
-`.groups` argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pyramid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>order <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"0_to_4"</span>, <span class="st">"5_to_9"</span>, <span class="st">"10_to_14"</span>, <span class="st">"15_to_19"</span>, <span class="st">"20_to_24"</span>, <span class="st">"25_to_29"</span>, <span class="st">"30_to_34"</span>, <span class="st">"35_to_39"</span>, <span class="st">"40_to_44"</span>, <span class="st">"45_to_49"</span>, <span class="st">"50_to_54"</span>, <span class="st">"55_to_59"</span>, <span class="st">"60_to_64"</span>, <span class="st">"65_to_69"</span>, <span class="st">"70_to_74"</span>, <span class="st">"75_to_79"</span>, <span class="st">"80_to_84"</span>, <span class="st">"85_to_89"</span>, <span class="st">"90_and_over"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>pyramid <span class="ot">&lt;-</span> pop_data <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Pop <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AG =</span>  <span class="fu">factor</span>(AG, <span class="at">levels =</span> order)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(AG) <span class="sc">%&gt;%</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PA, Sex, AG) <span class="sc">%&gt;%</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">pymd_pop =</span> <span class="fu">sum</span>(Pop)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grandpop=</span>grandpop)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pyramid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 4
+<pre><code># A tibble: 6 × 5
 # Groups:   PA, Sex [1]
-  PA         Sex     AG       pymd_pop
-  &lt;chr&gt;      &lt;chr&gt;   &lt;fct&gt;       &lt;dbl&gt;
-1 Ang Mo Kio Females 0_to_4       2480
-2 Ang Mo Kio Females 5_to_9       3120
-3 Ang Mo Kio Females 10_to_14     3320
-4 Ang Mo Kio Females 15_to_19     3620
-5 Ang Mo Kio Females 20_to_24     4030
-6 Ang Mo Kio Females 25_to_29     5020</code></pre>
+  PA         Sex     AG       pymd_pop grandpop
+  &lt;chr&gt;      &lt;chr&gt;   &lt;fct&gt;       &lt;dbl&gt;    &lt;dbl&gt;
+1 Ang Mo Kio Females 0_to_4       2480  4081540
+2 Ang Mo Kio Females 5_to_9       3120  4081540
+3 Ang Mo Kio Females 10_to_14     3320  4081540
+4 Ang Mo Kio Females 15_to_19     3620  4081540
+5 Ang Mo Kio Females 20_to_24     4030  4081540
+6 Ang Mo Kio Females 25_to_29     5020  4081540</code></pre>
 </div>
 </div>
 <ol start="2" type="1">
 <li>Calculate the total population by planning area</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>total_pop_PA <span class="ot">&lt;-</span> total_pop <span class="sc">|&gt;</span> <span class="fu">select</span>(PA, totalpop)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(total_pop_PA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 2
-  PA          totalpop
-  &lt;chr&gt;          &lt;dbl&gt;
-1 Bedok         278640
-2 Tampines      265690
-3 Jurong West   258540
-4 Sengkang      253120
-5 Woodlands     252510
-6 Hougang       227540</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>total_pop_PA <span class="ot">&lt;-</span> total_pop <span class="sc">|&gt;</span> <span class="fu">select</span>(PA, totalpop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="3" type="1">
 <li>Join the two data frame to form a data set with population by planning area and population by planning area, age group and sex. Calculate the percentage with the two columns.</li>
+<li>Create a data frame for the overall population</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>joined_tab <span class="ot">&lt;-</span> <span class="fu">left_join</span>(pyramid, total_pop_PA,</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'PA'</span> <span class="ot">=</span> <span class="st">'PA'</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pymd_pop_perc =</span> pymd_pop<span class="sc">/</span>totalpop)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(joined_tab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 6
-# Groups:   PA, Sex [1]
-  PA         Sex     AG       pymd_pop totalpop pymd_pop_perc
-  &lt;chr&gt;      &lt;chr&gt;   &lt;fct&gt;       &lt;dbl&gt;    &lt;dbl&gt;         &lt;dbl&gt;
-1 Ang Mo Kio Females 0_to_4       2480   161570        0.0153
-2 Ang Mo Kio Females 5_to_9       3120   161570        0.0193
-3 Ang Mo Kio Females 10_to_14     3320   161570        0.0205
-4 Ang Mo Kio Females 15_to_19     3620   161570        0.0224
-5 Ang Mo Kio Females 20_to_24     4030   161570        0.0249
-6 Ang Mo Kio Females 25_to_29     5020   161570        0.0311</code></pre>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>joined_tab <span class="ot">&lt;-</span> <span class="fu">left_join</span>(pyramid, total_pop_PA,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'PA'</span> <span class="ot">=</span> <span class="st">'PA'</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pymd_pop_perc =</span> pymd_pop<span class="sc">/</span>totalpop)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>topdata <span class="ot">&lt;-</span> <span class="fu">top_n</span>(total_pop_PA, <span class="at">n=</span><span class="dv">9</span>, totalpop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<ol start="5" type="1">
+<li>Prepare data for the overall population pyramid by grouping data by sex and age, and summarize the population</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>overall_pyramid <span class="ot">&lt;-</span> pop_data <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Pop <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AG =</span>  <span class="fu">factor</span>(AG, <span class="at">levels =</span> order)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(AG) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Sex, AG) <span class="sc">%&gt;%</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">pymd_pop =</span> <span class="fu">sum</span>(Pop)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">totalpop=</span>grandpop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="plot-population-pyramid-in-trellis-view" class="level3">
 <h3 class="anchored" data-anchor-id="plot-population-pyramid-in-trellis-view">4.4.2 Plot Population Pyramid in Trellis View</h3>
+<p>The population pyramid was plot using ggplot as follows:</p>
+<ul>
+<li><p>geom_col() was used to create the bar chart, and ifelse() is used to convert male population percentage to the left of the graph and female to the right.</p></li>
+<li><p>Formula of pymd_pop/totalpop is used to calculate the population percentage for each age group and sex.</p></li>
+<li><p>The color and format of overall population pyramid is adjusted to lighter grey for easier reading</p></li>
+<li><p>labs() was used to assign main title and axis titles.</p></li>
+<li><p>scale_x_continuous() is used to tidy up the the x axis label for clarity</p></li>
+<li><p>theme() is used to adjust font size and position for neater look</p></li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(joined_tab, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">ifelse</span>(Sex <span class="sc">==</span> <span class="st">"Males"</span>, <span class="at">yes =</span> <span class="sc">-</span>pymd_pop_perc, <span class="at">no =</span> pymd_pop_perc), </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">y =</span> AG, <span class="at">fill =</span> Sex)) <span class="sc">+</span> </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> joined_tab <span class="sc">%&gt;%</span> <span class="fu">filter</span>(PA <span class="sc">%in%</span> topdata<span class="sc">$</span>PA)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">ifelse</span>(Sex <span class="sc">==</span> <span class="st">"Males"</span>, <span class="at">yes =</span> <span class="sc">-</span>(pymd_pop<span class="sc">/</span>totalpop), <span class="at">no =</span> pymd_pop<span class="sc">/</span>totalpop), <span class="at">y =</span> AG, <span class="at">fill =</span> Sex)) <span class="sc">+</span> </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">geom_col</span>(<span class="at">data =</span> overall_pyramid, <span class="at">fill =</span> <span class="st">'grey'</span>) <span class="sc">+</span> </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">facet_wrap</span>(<span class="sc">~</span> PA) <span class="sc">+</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span> (<span class="at">x =</span> <span class="st">"Population percentage"</span>, <span class="at">y =</span> <span class="st">"Age"</span>, <span class="at">title=</span><span class="st">'Singapore Age-Sex Population Pyramid by Planning Area in Jun 2022'</span>) <span class="sc">+</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.06</span>, <span class="fl">0.06</span>, <span class="fl">0.02</span>), <span class="at">labels =</span> <span class="fu">abs</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.06</span>, <span class="fl">0.06</span>, <span class="fl">0.02</span>))) <span class="sc">+</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">22</span>),</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Take-Home_Ex02_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<p><img src="Take-Home_Ex02_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="960"></p>
 </div>
 </div>
 </section>
+</section>
+<section id="data-insights" class="level2">
+<h2 class="anchored" data-anchor-id="data-insights">4.5 Data Insights</h2>
+<ul>
+<li><p>With the new Pareto chart, we are able to identify the top 9 populated areas in Singapore, which make up on more than 50% of total Singapore population</p></li>
+<li><p>With the remake Age-Sex pyramid, we can observe more patterns from different planning area:</p>
+<ul>
+<li><p>Punggol and Tampines have very different age-sex pattern with the overall Singapore population and the rest of the planning areas</p></li>
+<li><p>Jurong West has a similar age-sex pattern with overall population</p></li>
+<li><p>Sengkang, Punggol and Tampines have relatively higher younger population</p></li>
+<li><p>Hougang, Jurong West and Bedok has more 60 years or above population</p></li>
+</ul></li>
+</ul>
 </section>
 </section>
 <section id="learning-point" class="level1">
 <h1>5. Learning Point</h1>
+<section id="aesthetics-1" class="level2">
+<h2 class="anchored" data-anchor-id="aesthetics-1">Aesthetics</h2>
+<ul>
+<li><p>When there is multiple chart of elements on the same graph, it is important to adjust the color of the chart to shows what is the primary information (planning area population) and secondary information (overall population)</p></li>
+<li><p>Color should be used to contrast important information and should be used carefully</p></li>
+<li><p>Simple background is preferred when there are multiple graphs in the same view</p></li>
+</ul>
+</section>
+<section id="clarity-1" class="level2">
+<h2 class="anchored" data-anchor-id="clarity-1">Clarity</h2>
+<ul>
+<li><p>Some insights might be lost if we group data unnecessarily, for example the age group pattern will be lost if we group the different age groups together</p></li>
+<li><p>Not all data labels should be shown, sometimes simple is beauty</p></li>
+<li><p>Data comparison is a good way to draw additional insights in our graphs, for example we compare overall population with planning area population for more insights</p></li>
+<li><p>Data visualisation is about trial and error. Sometimes you have to go through many iteration in order to have the best outcome. It is important to be patient during the process.</p></li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
