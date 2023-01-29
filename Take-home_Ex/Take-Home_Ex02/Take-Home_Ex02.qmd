@@ -20,7 +20,7 @@ The data set used for this exercise is downloaded from [Popoulation Trend Data, 
 
 # 2. Critics
 
-The original dashboard show the demographic structure of Singapore for top 9 most populated planning area. Age-sex pyramid is used to display gender and age group pattern in different planning areas. Nine selected planning areas is displayed on a single view by using trellis display.
+The [original dashboard](https://public.tableau.com/app/profile/aishwarya.maloo7070/viz/Take-Home_Ex01/Dashboard1?publish=yes) show the demographic structure of Singapore for top 9 most populated planning area. Age-sex pyramid is used to display gender and age group pattern in different planning areas. Nine selected planning areas is displayed on a single view by using trellis display.
 
 ![](images/image-139655184.png)
 
@@ -42,7 +42,7 @@ The original dashboard show the demographic structure of Singapore for top 9 mos
 
 -   Y-axis label age classification is unclear. Some patterns might be missing when the age data is grouped
 
--   X-axis shows % of Female population and % of Male population, which could be bias if female and and male population size are very different. % of total population would be better to illustrate gender pattern across age group. Can label only the max or min to emphasize on the most important information
+-   \% of total population would be better to illustrate gender pattern across age group. Can label only the max or min to emphasize on the most important information
 
 -   Missing information on total population to illustrate the 9 selected planning areas are the most populated in Singapore
 
