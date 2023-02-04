@@ -180,5 +180,12 @@
     "title": "Take Home Exercise 2",
     "section": "Clarity",
     "text": "Clarity\n\nSome insights might be lost if we group data unnecessarily, for example the age group pattern will be lost if we group the different age groups together\nNot all data labels should be shown, sometimes simple is beauty\nData comparison is a good way to draw additional insights in our graphs, for example we compare overall population with planning area population for more insights\nData visualisation is about trial and error. Sometimes you have to go through many iteration in order to have the best outcome. It is important to be patient during the process."
+  },
+  {
+    "objectID": "In-class_Ex/In-class_Ex04/In-class_Ex04.html",
+    "href": "In-class_Ex/In-class_Ex04/In-class_Ex04.html",
+    "title": "In-Class Exercise 4",
+    "section": "",
+    "text": "pacman::p_load(plotly, DT, patchwork, tidyverse)\n\n\nexam_data <- read_csv(\"data/Exam_data.csv\")\n\n\nplot_ly(data = exam_data, \n        x = ~ENGLISH, \n        y = ~MATHS, \n        color = ~RACE)"
   }
 ]
