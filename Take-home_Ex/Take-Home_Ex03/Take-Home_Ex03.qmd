@@ -1,0 +1,54 @@
+---
+title: "Take Home Exercise 3"
+author: "Law Man Long"
+date: "11 February 2023"
+date-modified: "`r Sys.Date()`"
+execute: 
+  echo: true
+  eval: true
+  results: hide
+  message: false
+  warning: false
+format: html
+editor: visual
+---
+
+# 1. Overview
+
+The purpose of the exervise is to uncover the salient patterns of resale prices of public housing property by residential towns and estates in Singapore. I will use select appropriate analytical visualisation techniques to discover the similarity and difference of data pattern for 3-Room, 4-Room and 5-Room flats. The study period is base on 2022 resale data that is available on [data.gov.sg](https://data.gov.sg/dataset?organization=housing-and-development-board) named "resale-flat-prices-based-on-registration-date-from-jan-2017-onwards".
+
+# 2. Visualization Tool Selection
+
+### Boxplot
+
+1\) Compare resale flat prices for 3-Room, 4-Room and 5-Room flat
+
+2\) Compare resale flat prices between different town
+
+3\) Compare resale flat prices between different flat model
+
+### Correlation Analysis
+
+1\) Scatterplot to show the relationship of floor sq and resale flat price
+
+2\) Remaining lease years vs resale flat price
+
+### Other Independent Analysis
+
+1\) Mosaic plot to show the relationship of X & Y
+
+# 3. Step by Step Procedures
+
+3.1 Getting Ready
+
+```{r}
+pacman::p_load(tidyverse, plotly)
+```
+
+3.2 Import data
+
+```{r}
+flat_data <- read_csv("data/resale-flat-prices-jan2017.csv")
+```
+
+# Data Patterns
