@@ -1,0 +1,89 @@
+---
+title: "Hands on Exercise - Parallel plot"
+author: "Law Man Long"
+date: "10 February 2023"
+date-modified: "`r Sys.Date()`"
+execute: 
+  echo: true
+  eval: true
+  results: hide
+  message: false
+  warning: false
+format: html
+editor: visual
+---
+Load package and data
+```{r}
+pacman::p_load(GGally, parallelPlot, tidyverse)
+```
+
+```{r}
+wh <- read_csv("data/WHData-2018.csv")
+```
+
+Plot smiple parallel cordinates
+```{r}
+ggparcoord(data = wh, 
+           columns = c(7:12))
+```
+
+With Boxplot
+```{r}
+ggparcoord(data = wh, 
+           columns = c(7:12), 
+           groupColumn = 2,
+           scale = "uniminmax",
+           alphaLines = 0.2,
+           boxplot = TRUE, 
+           title = "Parallel Coordinates Plot of World Happines Variables")
+```
+
+Facet
+```{r}
+ggparcoord(data = wh, 
+           columns = c(7:12), 
+           groupColumn = 2,
+           scale = "uniminmax",
+           alphaLines = 0.2,
+           boxplot = TRUE, 
+           title = "Multiple Parallel Coordinates Plots of World Happines Variables by Region") +
+  facet_wrap(~ Region)
+```
+Rotating X axis text label with themes
+```{r}
+ggparcoord(data = wh, 
+           columns = c(7:12), 
+           groupColumn = 2,
+           scale = "uniminmax",
+           alphaLines = 0.2,
+           boxplot = TRUE, 
+           title = "Multiple Parallel Coordinates Plots of World Happines Variables by Region") +
+  facet_wrap(~ Region) + 
+  theme(axis.text.x = element_text(angle = 30))
+```
+
+##Interactive
+
+Basic plot - parallelPlot()
+```{r}
+wh <- wh %>%
+  select("Happiness score", c(7:12))
+parallelPlot(wh,
+             width = 320,
+             height = 250)
+```
+
+Rotate axis label
+
+```{r}
+parallelPlot(wh,
+             rotateTitle = TRUE)
+```
+
+Parallel coordinates plot with histogram
+```{r}
+histoVisibility <- rep(TRUE, ncol(wh))
+parallelPlot(wh,
+             rotateTitle = TRUE,
+             histoVisibility = histoVisibility)
+```

@@ -50,6 +50,7 @@ pairs(wine[,2:12], lower.panel = NULL)
 ```
 
 Including with correlation coefficient
+
 ```{r}
 panel.cor <- function(x, y, digits=2, prefix="", cex.cor, ...) {
 usr <- par("usr")
@@ -73,7 +74,9 @@ ggstatsplot::ggcorrmat(
   data = wine, 
   cor.vars = 1:11)
 ```
+
 Adding title
+
 ```{r}
 #| fig-width: 7
 #| fig-height: 7
@@ -90,6 +93,7 @@ ggstatsplot::ggcorrmat(
 ```
 
 Multiple plots
+
 ```{r}
 #| fig-width: 10
 #| fig-height: 10
@@ -131,6 +135,7 @@ corrplot(wine.cor,
 ```
 
 Customize layout
+
 ```{r}
 corrplot(wine.cor, 
          method = "ellipse", 
@@ -146,6 +151,7 @@ corrplot(wine.cor,
 ```
 
 Mixed layout - corrplot.mix()
+
 ```{r}
 corrplot.mixed(wine.cor, 
                lower = "ellipse", 
@@ -156,6 +162,7 @@ corrplot.mixed(wine.cor,
 ```
 
 Combine corrgram with significant test
+
 ```{r}
 wine.sig = cor.mtest(wine.cor, conf.level= .95)
 
@@ -170,6 +177,7 @@ corrplot(wine.cor,
 ```
 
 Reorder a corrgram
+
 ```{r}
 corrplot.mixed(wine.cor, 
                lower = "ellipse", 
@@ -181,6 +189,7 @@ corrplot.mixed(wine.cor,
 ```
 
 Reorder correlation matrix using hclust
+
 ```{r}
 corrplot(wine.cor, 
          method = "ellipse", 
