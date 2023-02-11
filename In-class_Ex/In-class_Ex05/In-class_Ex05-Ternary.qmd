@@ -1,5 +1,5 @@
 ---
-title: "Hands on Exercise - Ternary plot"
+title: "In Class Exercise 5 - Ternary plot"
 author: "Law Man Long"
 date: "10 February 2023"
 date-modified: "`r Sys.Date()`"
@@ -12,7 +12,9 @@ execute:
 format: html
 editor: visual
 ---
+
 Load package
+
 ```{r}
 pacman::p_load(ggtern, plotly, tidyverse)
 ```
@@ -22,6 +24,7 @@ pop_data <- read_csv("data/respopagsex2000to2018_tidy.csv")
 ```
 
 Prepare the data - mutate() and dplyr()
+
 ```{r}
 agpop_mutated <- pop_data %>%
   mutate(`Year` = as.character(Year))%>%
@@ -35,12 +38,14 @@ agpop_mutated <- pop_data %>%
 ```
 
 Plotting Static Ternary diagram
+
 ```{r}
 ggtern(data=agpop_mutated,aes(x=YOUNG,y=ACTIVE, z=OLD)) +
   geom_point()
 ```
 
 Formatting
+
 ```{r}
 ggtern(data=agpop_mutated, aes(x=YOUNG,y=ACTIVE, z=OLD)) +
   geom_point() +
@@ -49,6 +54,7 @@ ggtern(data=agpop_mutated, aes(x=YOUNG,y=ACTIVE, z=OLD)) +
 ```
 
 Interactive ternary diagram
+
 ```{r}
 label <- function(txt) {
   list(
@@ -87,4 +93,3 @@ plot_ly(
     ternary = ternaryAxes
   )
 ```
-

@@ -1,5 +1,5 @@
 ---
-title: "Hands on Exercise - heatmap"
+title: "In Class Exercise 5 - heatmap"
 author: "Law Man Long"
 date: "10 February 2023"
 date-modified: "`r Sys.Date()`"
@@ -14,6 +14,7 @@ editor: visual
 ---
 
 Load package and data
+
 ```{r}
 pacman::p_load(seriation, dendextend, heatmaply, tidyverse)
 ```
@@ -23,42 +24,53 @@ wh <- read_csv("data/WHData-2018.csv")
 ```
 
 Prepare and transform data
+
 ```{r}
 row.names(wh) <- wh$Country
 #replace row number by country name for heatmaply to label
 ```
+
 Transform data frame into matrix
+
 ```{r}
 wh1 <- dplyr::select(wh, c(3, 7:12))
 wh_matrix <- data.matrix(wh)
 ```
 
 Static Heatmap
+
 ```{r}
 wh_heatmap <- heatmap(wh_matrix,
                       Rowv=NA, Colv=NA)
 ```
+
 heatmaply
+
 ```{r}
 heatmaply(wh_matrix[, -c(1, 2, 4, 5)])
 ```
 
-Transform the data by scaling
-- scaling to bring them close to normal distribution
+Transform the data by scaling - scaling to bring them close to normal distribution
+
 ```{r}
 heatmaply(wh_matrix[, -c(1, 2, 4, 5)],
           scale = "column")
 ```
 
 Normalising method
+
 ```{r}
 heatmaply(normalize(wh_matrix[, -c(1, 2, 4, 5)]))
 ```
+
 Percentising method
+
 ```{r}
 heatmaply(percentize(wh_matrix[, -c(1, 2, 4, 5)]))
 ```
+
 Finishing touch
+
 ```{r}
 heatmaply(normalize(wh_matrix[, -c(1, 2, 4, 5)]),
           Colv=NA,
@@ -73,5 +85,3 @@ heatmaply(normalize(wh_matrix[, -c(1, 2, 4, 5)]),
           ylab = "World Countries"
           )
 ```
-
-
