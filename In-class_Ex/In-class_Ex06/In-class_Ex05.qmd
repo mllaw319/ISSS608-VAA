@@ -1,0 +1,14 @@
+---
+title: "In Class Exercise"
+author: "Law Man Long"
+date: "18 February 2023"
+date-modified: "`r Sys.Date()`"
+execute: 
+  echo: true
+  eval: true
+  results: hide
+  message: false
+  warning: false
+format: html
+editor: visual
+---

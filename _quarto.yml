@@ -27,6 +27,8 @@ website:
             href: "Take-home_Ex/Take-Home_Ex02/Take-home_Ex02.html"
           - text: "Take-home Exercise 3"
             href: "Take-home_Ex/Take-Home_Ex03/Take-home_Ex03.html"
+          - text: "Take-home Exercise 4"
+            href: "Take-home_Ex/Take-Home_Ex04/Take-home_Ex04.html"
       - text: "In-class Exercise"
         menu:
           - text: "In-class Exercise 3"

@@ -306,5 +306,33 @@
     "title": "Take Home Exercise 3",
     "section": "5. Learning",
     "text": "5. Learning\nIn this exercise, I learn that we need to trial and error to find the best visualization for different type of data. For example, it won’t make sense if I use scatterplot for categorical data.\nI also learn that we can leverage on visualization to improve the accuracy of statistical analysis. For example, we can identify outlier through scatterplot, and remove the outlier before we conduct statistical testing.\nMoving on, I am interested to see what are visualization tools I can use to calibrate advanced analytics such as predictive models."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#data-preparation",
+    "href": "Take-home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#data-preparation",
+    "title": "Take Home Exercise 4",
+    "section": "2. Data Preparation",
+    "text": "2. Data Preparation\n\n2.1 Getting Ready\nIn this exercise, I will use ggplot2 and its extension, tidyverse, gganimate and its extension\nPackage\ngganimate, CPGfunction (newggslopegraph), gifski_renderer()\n\npacman::p_load(ggstatsplot, plotly, gganimate, readxl, tidyverse)\n\n\n\n2.2 Import Data\nI use the below code chunk to extract the data from the selected excel spreadsheets and range, and store it as “Import_trade” and “Export_trade” data frame.\n\nImport_trade <- read_excel(\"data/merchandisetrade.xlsx\", sheet = \"T1\", range = \"A10:AL129\")\n\n\nExport_trade <- read_excel(\"data/merchandisetrade.xlsx\", sheet = \"T2\", range = \"A10:AL101\")\n\n\n\n2.3 Data Preparation\nThe dataframe is at a wider table format and it is not user-friendly for time-series analysis. The below code chunk transforms the data from wider to longer format.\n\nImport_trade2 <- pivot_longer(Import_trade, cols = 2:38, names_to = \"Month year\", values_to = \"Trade Value\" )\n\n\nExport_trade2 <- pivot_longer(Export_trade, cols = 2:38, names_to = \"Month year\", values_to = \"Trade Value\" )\n\n\nhead(Import_trade2)\n\n# A tibble: 6 × 3\n  `Data Series`                                `Month year` `Trade Value`\n  <chr>                                        <chr>                <dbl>\n1 Total Merchandise Imports (Thousand Dollars) 2023 Jan          44393664\n2 Total Merchandise Imports (Thousand Dollars) 2022 Dec          49869770\n3 Total Merchandise Imports (Thousand Dollars) 2022 Nov          50653907\n4 Total Merchandise Imports (Thousand Dollars) 2022 Oct          53182943\n5 Total Merchandise Imports (Thousand Dollars) 2022 Sep          55799312\n6 Total Merchandise Imports (Thousand Dollars) 2022 Aug          58466009\n\n\nI then join the two data frame to one data frame and create one column for import trade value and one column for export trade value in dollar value.\n\n# join two data and create \"import\" and \"export\" column\n\nThere are 4 columns within the dataframe. For more accurate description, I rename the first column as “Country”, remove the irrelevant text and the “total” row.\n\n# rename column name\n# remove \"thousand dollar\"\n# remove first row\n\nFor further analyzing time pattern, I further derive the time stamp to month and year\n\n# derive month, year from month year"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#data-visualisation",
+    "href": "Take-home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#data-visualisation",
+    "title": "Take Home Exercise 4",
+    "section": "3. Data Visualisation",
+    "text": "3. Data Visualisation\n\n3.1 Line graph\n\n# Line graph with overall import and export\n# Trellis line graph to show the top 10 trade countries\n\n\n\n3.2 Slope graph\n\n# slopegraph to shows the total trade volume changes for 2020 and 2022\n\n\n\n3.3 Horizon graph.\n\n\n\n\n\n3.4 Cycle plot\n\n# cycle plot to shows the month and year pattern for overall countries and selected countries\n\n\n\n3.5 Animated bubble plot\n\n# animated scatterplot with X = Import, Y = Export, size of bubble = overall trade"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#data-insights",
+    "href": "Take-home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#data-insights",
+    "title": "Take Home Exercise 4",
+    "section": "4. Data Insights",
+    "text": "4. Data Insights"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#learnings",
+    "href": "Take-home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#learnings",
+    "title": "Take Home Exercise 4",
+    "section": "5. Learnings",
+    "text": "5. Learnings"
   }
 ]

@@ -1,0 +1,115 @@
+---
+title: "Take Home Exercise 4"
+author: "Law Man Long"
+date: "18 February 2023"
+date-modified: "`r Sys.Date()`"
+execute: 
+  echo: true
+  eval: true
+  results: hide
+  message: false
+  warning: false
+format: html
+editor: visual
+---
+
+## 1. Overview
+
+## 2. Data Preparation
+
+### 2.1 Getting Ready
+
+In this exercise, I will use ggplot2 and its extension, tidyverse, gganimate and its extension
+
+Package
+
+gganimate, CPGfunction (newggslopegraph), [gifski_renderer()](https://gganimate.com/reference/renderers.html)
+
+```{r}
+pacman::p_load(ggstatsplot, plotly, gganimate, readxl, tidyverse)
+```
+
+### 2.2 Import Data
+
+I use the below code chunk to extract the data from the selected excel spreadsheets and range, and store it as "Import_trade" and "Export_trade" data frame.
+
+```{r}
+Import_trade <- read_excel("data/merchandisetrade.xlsx", sheet = "T1", range = "A10:AL129")
+```
+
+```{r}
+Export_trade <- read_excel("data/merchandisetrade.xlsx", sheet = "T2", range = "A10:AL101")
+```
+
+### 2.3 Data Preparation
+
+The dataframe is at a wider table format and it is not user-friendly for time-series analysis. The below code chunk transforms the data from wider to longer format.
+
+```{r}
+Import_trade2 <- pivot_longer(Import_trade, cols = 2:38, names_to = "Month year", values_to = "Trade Value" )
+```
+
+```{r}
+Export_trade2 <- pivot_longer(Export_trade, cols = 2:38, names_to = "Month year", values_to = "Trade Value" )
+```
+
+```{r}
+head(Import_trade2)
+```
+
+I then join the two data frame to one data frame and create one column for import trade value and one column for export trade value in dollar value.
+
+```{r}
+# join two data and create "import" and "export" column
+```
+
+There are 4 columns within the dataframe. For more accurate description, I rename the first column as "Country", remove the irrelevant text and the "total" row.
+
+```{r}
+# rename column name
+# remove "thousand dollar"
+# remove first row
+```
+
+For further analyzing time pattern, I further derive the time stamp to month and year
+
+```{r}
+# derive month, year from month year
+```
+
+## 3. Data Visualisation
+
+### 3.1 Line graph
+
+```{r}
+# Line graph with overall import and export
+# Trellis line graph to show the top 10 trade countries
+```
+
+### 3.2 Slope graph
+
+```{r}
+# slopegraph to shows the total trade volume changes for 2020 and 2022
+```
+
+### 3.3 Horizon graph.
+
+```{r}
+
+```
+
+### 3.4 Cycle plot
+
+```{r}
+# cycle plot to shows the month and year pattern for overall countries and selected countries
+```
+
+### 3.5 Animated bubble plot
+
+```{r}
+# animated scatterplot with X = Import, Y = Export, size of bubble = overall trade
+```
+
+## 4. Data Insights
+
+## 5. Learnings
