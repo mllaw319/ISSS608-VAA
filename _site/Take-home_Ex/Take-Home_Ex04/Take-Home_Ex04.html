@@ -242,7 +242,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -259,19 +259,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#data-visualisation" id="toc-data-visualisation" class="nav-link" data-scroll-target="#data-visualisation">3. Data Visualisation</a>
   <ul class="collapse">
-  <li><a href="#line-graph" id="toc-line-graph" class="nav-link" data-scroll-target="#line-graph">3.1 Line graph</a></li>
+  <li><a href="#line-graph-for-overall-trade" id="toc-line-graph-for-overall-trade" class="nav-link" data-scroll-target="#line-graph-for-overall-trade">3.1 Line graph for Overall Trade</a></li>
+  <li><a href="#trellis-line-graph-for-top-12-trade-partners" id="toc-trellis-line-graph-for-top-12-trade-partners" class="nav-link" data-scroll-target="#trellis-line-graph-for-top-12-trade-partners">3.1 Trellis Line graph for Top 12 Trade Partners</a></li>
   <li><a href="#slope-graph" id="toc-slope-graph" class="nav-link" data-scroll-target="#slope-graph">3.2 Slope graph</a></li>
-  <li><a href="#horizon-graph." id="toc-horizon-graph." class="nav-link" data-scroll-target="#horizon-graph.">3.3 Horizon graph.</a></li>
-  <li><a href="#cycle-plot" id="toc-cycle-plot" class="nav-link" data-scroll-target="#cycle-plot">3.4 Cycle plot</a></li>
-  <li><a href="#animated-bubble-plot" id="toc-animated-bubble-plot" class="nav-link" data-scroll-target="#animated-bubble-plot">3.5 Animated bubble plot</a></li>
+  <li><a href="#cycle-plot" id="toc-cycle-plot" class="nav-link" data-scroll-target="#cycle-plot">3.3 Cycle plot</a></li>
   </ul></li>
   <li><a href="#data-insights" id="toc-data-insights" class="nav-link" data-scroll-target="#data-insights">4. Data Insights</a></li>
-  <li><a href="#learnings" id="toc-learnings" class="nav-link" data-scroll-target="#learnings">5. Learnings</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -299,7 +297,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">February 19, 2023</p>
+      <p class="date-modified">February 26, 2023</p>
     </div>
   </div>
     
@@ -310,108 +308,437 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">1. Overview</h2>
+<p>In this exercise, I will explore the time series data pattern for Singapore bi-lateral trade from January 2020 to December 2022. The objective is to discover yearly and monthly trend for trade with different countries through different analytical visualization techniques.</p>
 </section>
 <section id="data-preparation" class="level2">
 <h2 class="anchored" data-anchor-id="data-preparation">2. Data Preparation</h2>
 <section id="getting-ready" class="level3">
 <h3 class="anchored" data-anchor-id="getting-ready">2.1 Getting Ready</h3>
-<p>In this exercise, I will use ggplot2 and its extension, tidyverse, gganimate and its extension</p>
-<p>Package</p>
-<p>gganimate, CPGfunction (newggslopegraph), <a href="https://gganimate.com/reference/renderers.html">gifski_renderer()</a></p>
+<p>In this exercise, I will use ggplot2 and its extension; CPGfunction for slopegraph; readxl, lubridate and tidyverse for data transformation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(ggstatsplot, plotly, gganimate, readxl, tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(ggstatsplot, CGPfunctions, readxl, lubridate, tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="import-data" class="level3">
 <h3 class="anchored" data-anchor-id="import-data">2.2 Import Data</h3>
-<p>I use the below code chunk to extract the data from the selected excel spreadsheets and range, and store it as “Import_trade” and “Export_trade” data frame.</p>
+<p>The original excel file contains multiple worksheet. I use the below code chunk to extract the data from the selected excel spreadsheets and range, and store it as “Import_trade” and “Export_trade” data frame.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Import_trade <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/merchandisetrade.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"T1"</span>, <span class="at">range =</span> <span class="st">"A10:AL129"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Import_trade <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/merchandisetrade.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"T1"</span>, <span class="at">range =</span> <span class="st">"A10:AK129"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Export_trade <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/merchandisetrade.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"T2"</span>, <span class="at">range =</span> <span class="st">"A10:AL101"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Export_trade <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/merchandisetrade.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"T2"</span>, <span class="at">range =</span> <span class="st">"A10:AK101"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="data-preparation-1" class="level3">
 <h3 class="anchored" data-anchor-id="data-preparation-1">2.3 Data Preparation</h3>
-<p>The dataframe is at a wider table format and it is not user-friendly for time-series analysis. The below code chunk transforms the data from wider to longer format.</p>
+<p>The original dataset was not organized in a user-friendly way for time series analysis, I perform below data wrangling steps to prepare a cleaner set of data for later analysis and visualization:</p>
+<ol type="1">
+<li>The original excel table is in a wider table format which is not user-friendly for time-series analysis. The below code chunk transforms the data from wider to longer format, and select the data afer January 2020.</li>
+</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Import_trade2 <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(Import_trade, <span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">38</span>, <span class="at">names_to =</span> <span class="st">"Month year"</span>, <span class="at">values_to =</span> <span class="st">"Trade Value"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Import_trade2 <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(Import_trade, <span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">37</span>, <span class="at">names_to =</span> <span class="st">"Month year"</span>, <span class="at">values_to =</span> <span class="st">"Trade Value"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Export_trade2 <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(Export_trade, <span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">38</span>, <span class="at">names_to =</span> <span class="st">"Month year"</span>, <span class="at">values_to =</span> <span class="st">"Trade Value"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Export_trade2 <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(Export_trade, <span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">37</span>, <span class="at">names_to =</span> <span class="st">"Month year"</span>, <span class="at">values_to =</span> <span class="st">"Trade Value"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<ol start="2" type="1">
+<li>Some of merchandise value are in million dollars and some are in thousand dollars. I standardize the trade value by creating a multiplier and convert all into single dollar value.</li>
+</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Import_trade2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Export_trade3 <span class="ot">&lt;-</span> Export_trade2 <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">multiplier =</span> <span class="fu">ifelse</span>(<span class="fu">str_detect</span>(<span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, <span class="st">"Million"</span>), <span class="dv">1000000</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">ifelse</span>(<span class="fu">str_detect</span>(<span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, <span class="st">"Thousand"</span>), <span class="dv">1000</span>, <span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Trade Value</span><span class="st">`</span> <span class="ot">=</span> multiplier <span class="sc">*</span> <span class="st">`</span><span class="at">Trade Value</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="st">"multiplier"</span>))</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>Import_trade3 <span class="ot">&lt;-</span> Import_trade2 <span class="sc">%&gt;%</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">multiplier =</span> <span class="fu">ifelse</span>(<span class="fu">str_detect</span>(<span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, <span class="st">"Million"</span>), <span class="dv">1000000</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">ifelse</span>(<span class="fu">str_detect</span>(<span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, <span class="st">"Thousand"</span>), <span class="dv">1000</span>, <span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Trade Value</span><span class="st">`</span> <span class="ot">=</span> multiplier <span class="sc">*</span> <span class="st">`</span><span class="at">Trade Value</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="st">"multiplier"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li>Join the two data frame to one data frame and create one column for import trade value and one column for export trade value in dollar value.</li>
+<li>Rename the column header for easier readibility.</li>
+<li>Clean all the non-number values in the dataset to avoid calculation errors.</li>
+<li>Derive the time stamp to month and year</li>
+<li>Select data between date range January 2020 to December 2022.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Combined <span class="ot">&lt;-</span> <span class="fu">full_join</span>(Export_trade3, Import_trade3,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"Data Series"</span>, <span class="st">"Month year"</span>),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">" Export"</span>, <span class="st">" Import"</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"YearMon"</span> <span class="ot">=</span> <span class="st">"Month year"</span>, <span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"Data Series"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Country =</span> <span class="fu">str_replace</span>(Country, <span class="st">"</span><span class="sc">\\</span><span class="st">(Million Dollars</span><span class="sc">\\</span><span class="st">)"</span>, <span class="st">""</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Country =</span> <span class="fu">str_replace</span>(Country, <span class="st">"</span><span class="sc">\\</span><span class="st">(Thousand Dollars</span><span class="sc">\\</span><span class="st">)"</span>, <span class="st">""</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Country =</span> <span class="fu">str_trim</span>(Country)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">YearMon =</span> <span class="fu">ym</span>(YearMon)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Year =</span> <span class="fu">format</span>(YearMon, <span class="at">format=</span><span class="st">"%Y"</span>),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">Month =</span> <span class="fu">factor</span>(<span class="fu">month</span>(YearMon), </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels=</span>month.abb, </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ordered=</span><span class="cn">TRUE</span>),</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">Quarter =</span> <span class="fu">quarter</span>(YearMon)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">%&gt;%</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Trade Value Export</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">replace_na</span>(<span class="st">`</span><span class="at">Trade Value Export</span><span class="st">`</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Trade Value Import</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">replace_na</span>(<span class="st">`</span><span class="at">Trade Value Import</span><span class="st">`</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(YearMon <span class="sc">&lt;</span> <span class="st">'2023-01-01'</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="7" type="1">
+<li>Dataset consist of total merchandise value, continent (such as America, Asia, Europe, etc) and individual country . I separate the data into “Combined_total”, and “Combined_country” for easier computation.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Combined_country <span class="ot">&lt;-</span> Combined <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"America"</span>, <span class="st">"Asia"</span>, <span class="st">"Europe"</span>,<span class="st">"Oceania"</span>,<span class="st">"Africa"</span>,<span class="st">"European Union"</span>, <span class="st">"Total Merchandise Exports"</span>, <span class="st">"Total Merchandise Imports"</span>))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>Combined_total <span class="ot">&lt;-</span> Combined <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Country, <span class="st">"Total"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The final data looks like below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Combined_country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 3
-  `Data Series`                                `Month year` `Trade Value`
-  &lt;chr&gt;                                        &lt;chr&gt;                &lt;dbl&gt;
-1 Total Merchandise Imports (Thousand Dollars) 2023 Jan          44393664
-2 Total Merchandise Imports (Thousand Dollars) 2022 Dec          49869770
-3 Total Merchandise Imports (Thousand Dollars) 2022 Nov          50653907
-4 Total Merchandise Imports (Thousand Dollars) 2022 Oct          53182943
-5 Total Merchandise Imports (Thousand Dollars) 2022 Sep          55799312
-6 Total Merchandise Imports (Thousand Dollars) 2022 Aug          58466009</code></pre>
+<pre><code># A tibble: 6 × 7
+  Country YearMon    `Trade Value Export` Trade Value Impo…¹ Year  Month Quarter
+  &lt;chr&gt;   &lt;date&gt;                    &lt;dbl&gt;              &lt;dbl&gt; &lt;chr&gt; &lt;ord&gt;   &lt;int&gt;
+1 Belgium 2022-12-01            432376000          103655000 2022  Dec         4
+2 Belgium 2022-11-01            756814000          121773000 2022  Nov         4
+3 Belgium 2022-10-01            350565000           88796000 2022  Oct         4
+4 Belgium 2022-09-01            386724000          215978000 2022  Sep         3
+5 Belgium 2022-08-01            570824000          132917000 2022  Aug         3
+6 Belgium 2022-07-01            991586000          224676000 2022  Jul         3
+# … with abbreviated variable name ¹​`Trade Value Import`</code></pre>
 </div>
 </div>
-<p>I then join the two data frame to one data frame and create one column for import trade value and one column for export trade value in dollar value.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join two data and create "import" and "export" column</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Combined_total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  Country                   YearMon    Trade Value…¹ Trade…² Year  Month Quarter
+  &lt;chr&gt;                     &lt;date&gt;             &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;ord&gt;   &lt;int&gt;
+1 Total Merchandise Exports 2022-12-01   55000084000       0 2022  Dec         4
+2 Total Merchandise Exports 2022-11-01   54162780000       0 2022  Nov         4
+3 Total Merchandise Exports 2022-10-01   56576348000       0 2022  Oct         4
+4 Total Merchandise Exports 2022-09-01   62507132000       0 2022  Sep         3
+5 Total Merchandise Exports 2022-08-01   63363749000       0 2022  Aug         3
+6 Total Merchandise Exports 2022-07-01   64124991000       0 2022  Jul         3
+# … with abbreviated variable names ¹​`Trade Value Export`,
+#   ²​`Trade Value Import`</code></pre>
 </div>
-<p>There are 4 columns within the dataframe. For more accurate description, I rename the first column as “Country”, remove the irrelevant text and the “total” row.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename column name</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># remove "thousand dollar"</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># remove first row</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>For further analyzing time pattern, I further derive the time stamp to month and year</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># derive month, year from month year</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="data-visualisation" class="level2">
 <h2 class="anchored" data-anchor-id="data-visualisation">3. Data Visualisation</h2>
-<section id="line-graph" class="level3">
-<h3 class="anchored" data-anchor-id="line-graph">3.1 Line graph</h3>
+<section id="line-graph-for-overall-trade" class="level3">
+<h3 class="anchored" data-anchor-id="line-graph-for-overall-trade">3.1 Line graph for Overall Trade</h3>
+<p>Line graph is used to show the overall and general direction of change in Singapore Merchandise Trade with Partners. This can help us to discover to overall trend and variability through the particular time span.</p>
+<p>ggplot is used to plot the Total Import Value and Export Value , with X axis as Year-Month and Y axis as total trade value.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Line graph with overall import and export</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Trellis line graph to show the top 10 trade countries</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize and pivot datatable for line graph</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>Combined_total2 <span class="ot">&lt;-</span> Combined_total <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(YearMon) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">TotalImport =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Trade Value Import</span><span class="st">`</span>),</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">TotalExport =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Trade Value Export</span><span class="st">`</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">TotalImport</span><span class="st">`</span>, <span class="st">`</span><span class="at">TotalExport</span><span class="st">`</span>),</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"Category"</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"Value"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">#plot graph with ggplot</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Combined_total2, <span class="fu">aes</span>(<span class="at">x =</span> YearMon, <span class="at">y =</span> Value, <span class="at">color =</span> Category)) <span class="sc">+</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">date_breaks =</span> <span class="st">"1 month"</span>, <span class="at">date_labels =</span>  <span class="st">"%b %Y"</span>)  <span class="sc">+</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>(<span class="at">scale =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">1000000</span>, <span class="at">suffix =</span><span class="st">"M"</span>)) <span class="sc">+</span> </span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Singapore Merchandise Trade with Partners increased since 2020, but start to fall since 2022 Q3"</span>, <span class="at">subtitle =</span> <span class="st">"Monthly Import and Export Trade from 2020 Jan to 2022 Dec"</span>) <span class="sc">+</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">hjust=</span><span class="dv">1</span>), <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="1152"></p>
 </div>
+</div>
+<p>The graph shows an upward trend, which represents a positive growth since Jan 2020. There are two big drop in Apr 2020 and Feb 2022. In Feb 2021, there is a sharp increase in both import and export trade, which is a sign of economic recovery. However, both Import and Export trade start to fall since 2022 Q3, which might represents the world economic downturn due to political and economic instability.</p>
+</section>
+<section id="trellis-line-graph-for-top-12-trade-partners" class="level3">
+<h3 class="anchored" data-anchor-id="trellis-line-graph-for-top-12-trade-partners">3.1 Trellis Line graph for Top 12 Trade Partners</h3>
+<p>Trellis Line graph is effective in separating individual countries trend. Top 12 countries in trade volume are selected to show the trend for Singapore significant partners.</p>
+<p>ggplot and facewrap are used to build the trellis line graph. X axis represent the Year-Month, Y axis represents the trade value in million dollar, and two lines represent import and export trade respectively. The trellis graph is organized in the order of largest to smallest total trade value in each country.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the total trade value for each countries</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>Trade_Value_Agg <span class="ot">&lt;-</span> Combined_country <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Country) <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">TotalExport =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Trade Value Export</span><span class="st">`</span>),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">TotalImport =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Trade Value Import</span><span class="st">`</span>),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Totaltrade =</span> TotalExport <span class="sc">+</span> TotalImport)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Rank the top 10 countries in terms of export and import trade value</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>Top_countries <span class="ot">&lt;-</span> Trade_Value_Agg <span class="sc">%&gt;%</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Totaltrade))<span class="sc">%&gt;%</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#record the descending order in terms of total trade to reorder trellis chart</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>countryorder <span class="ot">&lt;-</span> <span class="fu">c</span>(Top_countries<span class="sc">$</span>Country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Transform the data table to longer table</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Combined_country2 <span class="ot">&lt;-</span> Combined_country <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">%in%</span> Top_countries<span class="sc">$</span>Country)<span class="sc">%&gt;%</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Country, YearMon) <span class="sc">%&gt;%</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">TotalImport =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Trade Value Import</span><span class="st">`</span>),</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">TotalExport =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Trade Value Export</span><span class="st">`</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">TotalImport</span><span class="st">`</span>, <span class="st">`</span><span class="at">TotalExport</span><span class="st">`</span>),</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"Category"</span>,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"TradeValue"</span>,</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co">#plotting graph</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Combined_country2, <span class="fu">aes</span>(<span class="at">x =</span> YearMon, <span class="at">y =</span> TradeValue, <span class="at">color =</span> Category)) <span class="sc">+</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span><span class="fu">factor</span>(Country, <span class="at">levels =</span> countryorder)) <span class="sc">+</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>(<span class="at">scale =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">1000000</span>, <span class="at">suffix =</span><span class="st">"M"</span>)) <span class="sc">+</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Top 12 Countries with the highest Singapore Merchandise Trade Value"</span>)<span class="sc">+</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">hjust=</span><span class="dv">1</span>), <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Mainland China has the largest merchandise trade with Singapore, followed by Malaysia and United States. Countries like Mainland China, Malaysia and Indonesia has an increase growth in merchandise trade with Singapore and continue to be an important trade partner. Singapore has a large net positive trade income with Hong Kong in specific. Taiwan on the other hand is a key net export trade partner, with export trade continues to grow. China records a large volatility in trade volume, with larger import in the recent months, which could be due to the COVID-19 lock down in Mainland China. Other partner such as Thailand, Vietnam, Australia and India remain constants in both export and import trade.</p>
 </section>
 <section id="slope-graph" class="level3">
 <h3 class="anchored" data-anchor-id="slope-graph">3.2 Slope graph</h3>
+<p>Slope graph is useful to compare changes over a time period by removing the monthly variability. In this analysis, we are going to discover the yearly changes of our key trade partners and compare the rate of changes among countries.</p>
+<p>Newggslopegraph is used to build the slopegraph, which shows the Total Import trade value in 2020, 2021 and 2022 for top 12 Merchandise Trade Partners.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># slopegraph to shows the total trade volume changes for 2020 and 2022</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the sum of Import and Export trade by year and country, and filter the top 12 partners</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>Combined_TopImporters_Year <span class="ot">&lt;-</span> Combined <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">%in%</span> Top_countries<span class="sc">$</span>Country)<span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Country, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">TotalImport =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Trade Value Import</span><span class="st">`</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TotalImport =</span> TotalImport<span class="sc">/</span><span class="dv">1000000</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>Combined_TopExporters_Year <span class="ot">&lt;-</span> Combined <span class="sc">%&gt;%</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">%in%</span> Top_countries<span class="sc">$</span>Country)<span class="sc">%&gt;%</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Country, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">TotalExport =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Trade Value Export</span><span class="st">`</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TotalExport =</span> TotalExport<span class="sc">/</span><span class="dv">1000000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="horizon-graph." class="level3">
-<h3 class="anchored" data-anchor-id="horizon-graph.">3.3 Horizon graph.</h3>
 <div class="cell">
-
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot slopegraph to shows the import trade volume changes by year</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">newggslopegraph</span>(<span class="at">dataframe =</span> Combined_TopImporters_Year,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">Times =</span> Year,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">Measurement =</span> TotalImport,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">Grouping =</span> Country,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">Title =</span> <span class="st">"Imports by Top 10 Largest Importers in million dollars"</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">SubTitle =</span> <span class="st">"2020 - 2022"</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">Caption =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
+</div>
+<p>Mainland China, Malaysia, Taiwan, United States remains as the top 4 largest importers from 2020 to 2022 and continue to see a high growth in import trade. However, Import from Korea has exceed Japan to become the fifth largest importer to Singapore. Australia import has also surpassed India to be Singapore ninth largest importer.</p>
+<p>Another slopegraph is built to show the Total Export trade value in 2020, 2021 and 2022 for top 12 Merchandise Trade Partners.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot slopegraph to shows the export trade volume changes by year</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">newggslopegraph</span>(<span class="at">dataframe =</span> Combined_TopExporters_Year,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">Times =</span> Year,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">Measurement =</span> TotalExport,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">Grouping =</span> Country,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">Title =</span> <span class="st">"Exports by Top 10 Largest Exporters in million dollars"</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">SubTitle =</span> <span class="st">"2020 - 2022"</span>,</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">Caption =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Mainland and China continues to be Singapore top 2 exporters from 2020 to 2022. However, their growth rate has showed down since 2021 which could be due to COVID lock-down. Meanwhile, Malaysia has record a large increase in export trade and surpassed United States to be the third largest exporter. There is also a large growth in Indonesia since 2020.</p>
 </section>
 <section id="cycle-plot" class="level3">
-<h3 class="anchored" data-anchor-id="cycle-plot">3.4 Cycle plot</h3>
+<h3 class="anchored" data-anchor-id="cycle-plot">3.3 Cycle plot</h3>
+<p>Cycle plot is used to visualise cyclical pattern, especially on cycle correlated with month-of-the-year pattern. It helps us to understand how values are advancing over a period of time.</p>
+<p>In this scenario, Cycle plot is used to illustrate the cyclical pattern for our key Import and Export trade partners, to see if there are significance seasonality in trades.</p>
+<p>I used a function to help to re-create cycleplot for the top 12 largest import and export partners.</p>
+<p>Below are the code chunks how I am able to construct it:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cycle plot to shows the month and year pattern for overall countries and selected countries</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Compile the dataframe and calculate the average import and export by country and month-year</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>Combined_Quarter <span class="ot">&lt;-</span> Combined <span class="sc">%&gt;%</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">%in%</span> Top_countries<span class="sc">$</span>Country)<span class="sc">%&gt;%</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Country, Month, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">AvgImport =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">Trade Value Import</span><span class="st">`</span>), <span class="at">AvgExport =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">Trade Value Export</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AvgImport =</span> AvgImport<span class="sc">/</span><span class="dv">1000000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AvgExport =</span> AvgExport<span class="sc">/</span><span class="dv">1000000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="animated-bubble-plot" class="level3">
-<h3 class="anchored" data-anchor-id="animated-bubble-plot">3.5 Animated bubble plot</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># animated scatterplot with X = Import, Y = Export, size of bubble = overall trade</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create a function to plot the cycleplot for each import countries</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>plotImportCountry <span class="ot">&lt;-</span> <span class="cf">function</span>(Combined_Quarter, CountryName) {</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  Country <span class="ot">&lt;-</span> Combined_Quarter <span class="sc">%&gt;%</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Country <span class="sc">==</span> CountryName)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the average import by month</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  hline.data <span class="ot">&lt;-</span> Country <span class="sc">%&gt;%</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Month) <span class="sc">%&gt;%</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">avgimport =</span> <span class="fu">mean</span>(AvgImport))</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a> <span class="co">#plot the graph by ggplot and facet </span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data=</span>Country,</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x=</span>Year, </span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y=</span>AvgImport, </span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">group=</span>Month), </span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">colour=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept=</span>avgimport),</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">data=</span>hline.data,</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>               <span class="at">linetype=</span><span class="dv">6</span>,</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour=</span><span class="st">'blue'</span>,</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>               <span class="at">size=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(<span class="sc">~</span>Month) <span class="sc">+</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Import from"</span>, CountryName, <span class="st">"from 2020 Jan to 2022 Dec"</span>)) <span class="sc">+</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Import Value in million dollar"</span>) <span class="sc">+</span></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">hjust=</span><span class="dv">1</span>))</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a><span class="co">#Repeat for top 12 import countries in the order of total trade value</span></span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(country <span class="cf">in</span> countryorder) {</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">plotImportCountry</span>(Combined_Quarter, country))</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-19-2.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-19-3.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-19-4.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-19-5.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-19-6.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-19-7.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-19-8.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-19-9.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-19-10.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-19-11.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-19-12.png" class="img-fluid" width="1152"></p>
+</div>
+<p>Most countries shows a positive growth in import from 2020 to 2022, especially for the months of Q3 &amp; Q4 . China, take an example, has a lower import in February due to Lunar New Year Holiday. Vietnam, in contrast, has a very high import in April in particular. For Malaysia, the overall trend has been stable over for all months.</p>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create a function to plot the cycleplot for each export countries</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>plotExportCountry <span class="ot">&lt;-</span> <span class="cf">function</span>(Combined_Quarter, CountryName) {</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  Country <span class="ot">&lt;-</span> Combined_Quarter <span class="sc">%&gt;%</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Country <span class="sc">==</span> CountryName)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Calculate the average import by month  </span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  hline.data <span class="ot">&lt;-</span> Country <span class="sc">%&gt;%</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Month) <span class="sc">%&gt;%</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">avgexport =</span> <span class="fu">mean</span>(AvgExport))</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">#plot the graph by ggplot and facet  </span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data=</span>Country,</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x=</span>Year, </span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y=</span>AvgExport, </span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>                  <span class="at">group=</span>Month), </span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">colour=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept=</span>avgexport),</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>               <span class="at">data=</span>hline.data,</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>               <span class="at">linetype=</span><span class="dv">6</span>,</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour=</span><span class="st">'blue'</span>,</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>               <span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(<span class="sc">~</span>Month) <span class="sc">+</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Export to"</span>, CountryName, <span class="st">"from 2020 Jan to 2022 Dec"</span>)) <span class="sc">+</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Export Valuein million dollar"</span>) <span class="sc">+</span></span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">hjust=</span><span class="dv">1</span>))</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a><span class="co">#Repeat for top 12 import countries in the order of total trade value</span></span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(country <span class="cf">in</span> countryorder) {</span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">plotExportCountry</span>(Combined_Quarter, country))</span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-20-2.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-20-3.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-20-4.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-20-5.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-20-6.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-20-7.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-20-8.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-20-9.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-20-10.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-20-11.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-20-12.png" class="img-fluid" width="1152"></p>
 </div>
 </section>
 </section>
 <section id="data-insights" class="level2">
 <h2 class="anchored" data-anchor-id="data-insights">4. Data Insights</h2>
+<p>Here are some high level observation through the whole analysis:</p>
+<section id="overall" class="level4">
+<h4 class="anchored" data-anchor-id="overall">Overall</h4>
+<p>The world trade is affected by COVID in these 2 years, and lead to some hocky stick pattern in terms of trade value. There are some drops Apr 2020 and Feb 2022, but we also see recover in Apr 2021. However, the recent trade has not been optimistic which might represents the worldwide economic downturn due to political and economic instability.</p>
 </section>
-<section id="learnings" class="level2">
-<h2 class="anchored" data-anchor-id="learnings">5. Learnings</h2>
+<section id="section" class="level4">
+<h4 class="anchored" data-anchor-id="section"></h4>
+<p>China</p>
+<p>China is one of Singapore’s largest importer and Exporter, but we also can see the regent volatility in trade volume. There are bigger import growth then export growth, which might be due to the recent COVID lock-down and the slow down of manufacturing production.</p>
+</section>
+<section id="malaysia" class="level4">
+<h4 class="anchored" data-anchor-id="malaysia">Malaysia</h4>
+<p>Malaysia is the second largest trade partner with Singapore, which shows a more stable trend in both import and export in these 2 years. It could be because of the proximity of distance, the trade is less interrupted by the border closure and supply chain issues. It is also a country with less seasonal monthly variance in trades and remain stable for all 12 months in a year.</p>
+</section>
+<section id="taiwan-and-hong-kong" class="level4">
+<h4 class="anchored" data-anchor-id="taiwan-and-hong-kong">Taiwan and Hong Kong</h4>
+<p>These 2 cities locations have interesting trend - Hong Kong is a key net exporter for Singapore and Taiwan is the key net importer. It could be because Hong Kong do not have much manufacturing and merchandise to export, while Taiwan is one of the key location that produce semi-conductor and high-tech components. This could be related to the technological industry development in Singapore and can foresee this trend will remains in the coming years.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
