@@ -1,0 +1,76 @@
+---
+title: "Untitled"
+execute: 
+  echo: true
+  eval: true
+  result: hide
+  message: false
+  warning: false
+format: html
+page-layout: full
+editor: visual
+---
+
+```{r}
+pacman::p_load(tidyverse, lubridate, ggstatsplot)
+swimdata <- read_csv("data/swimdata_clean.csv")
+continents <- read_csv("data/continents.csv")
+```
+
+```{r}
+swimdata <- swimdata %>%
+  mutate(Finals_Time2 = period_to_seconds(ms(Finals_Time))) %>%
+  mutate(Distance2 = as.numeric(str_replace(Distance, "m", ""))) %>%
+  mutate(Average_speed = Distance2/Finals_Time2)
+
+#write_csv(
+#  swimdata,
+#  "swimdata_clean2.csv",
+#)
+```
+
+Correlation between average speed and **reaction time**; using scatter plot (by gender, event, stroke, race distance and/or round) 
+
+```{r}
+ggplot(data = swimdata,
+       aes(x = Reaction_Time, y = Average_speed)) +
+  geom_point() +
+  geom_smooth(size = 1) +
+  facet_wrap(~Gender)
+```
+
+```{r}
+ggscatterstats(
+  data = swimdata,
+  x = Reaction_Time,
+  y = Average_speed,
+  marginal = FALSE,
+  )
+```
+
+H0: Mean average speeds across **strokes** are the same (event constant) H1: Mean average speeds are not the same 
+
+```{r}
+ggbetweenstats(
+  data = swimdata,
+  x = Style, 
+  y = Average_speed,
+  type = "p",
+  mean.ci = TRUE, 
+  pairwise.comparisons = TRUE, 
+  pairwise.display = "s",
+  p.adjust.method = "fdr",
+  messages = FALSE
+)
+```
+
+H0: Mean average speeds across **continents** are the same (event constant) H1: Mean average speeds are not the same 
+
+```{r}
+country <- swimdata %>%
+  group_by(Team) %>%
+  summarize(
+    n = n()
+  )
+view(country)
+```

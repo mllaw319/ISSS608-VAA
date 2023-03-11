@@ -369,6 +369,7 @@ Here are some high level observation through the whole analysis:
 The world trade is affected by COVID in these 2 years, and lead to some hocky stick pattern in terms of trade value. There are some drops Apr 2020 and Feb 2022, but we also see recover in Apr 2021. However, the recent trade has not been optimistic which might represents the worldwide economic downturn due to political and economic instability.
 
 #### 
+
 China
 
 China is one of Singapore's largest importer and Exporter, but we also can see the regent volatility in trade volume. There are bigger import growth then export growth, which might be due to the recent COVID lock-down and the slow down of manufacturing production.

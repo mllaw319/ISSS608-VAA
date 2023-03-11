@@ -1,0 +1,158 @@
+---
+title: "In-Class Exercise "
+author: "Law Man Long"
+execute: 
+  echo: true
+  eval: true
+  result: hide
+  message: false
+  warning: false
+format: html
+page-layout: full
+editor: visual
+---
+
+## Preparation
+
+#### Load package
+
+```{r}
+pacman::p_load(igraph, tidygraph, ggraph, 
+               visNetwork, lubridate, clock,
+               tidyverse, graphlayouts)
+```
+
+#### Load data
+
+Data organized into nodes (employee level) and edge (emails exchange).
+
+```{r}
+GAStech_nodes <- read_csv("data/GAStech_email_node.csv")
+GAStech_edges <- read_csv("data/GAStech_email_edge-v2.csv")
+```
+
+#### Data Wrangling
+
+Create new column SendDate and Weekday in dmy and wday format
+
+```{r}
+GAStech_edges <- GAStech_edges %>%
+  mutate(SendDate = dmy(SentDate)) %>%
+  mutate(Weekday = wday(SentDate,
+                        label = TRUE, #Monday or 1
+                        abbr = FALSE))
+```
+
+Wrangling attributes - aggregate individuals by dates, senders and receivers and main subject and weekday
+
+```{r}
+GAStech_edges_aggregated <- GAStech_edges %>%
+  filter(MainSubject == "Work related") %>%
+  group_by(source, target, Weekday) %>%
+    summarise(Weight = n()) %>%
+  filter(source!=target) %>%
+  filter(Weight > 1) %>%
+  ungroup()
+```
+
+## Tidygraph
+
+tbl combine nodes and edges into one object class to build an tidygraph's network graph data.frame. There are 54 nodes and 1372 edges
+
+```{r}
+GAStech_graph <- tbl_graph(nodes = GAStech_nodes,
+                           edges = GAStech_edges_aggregated, 
+                           directed = TRUE)
+GAStech_graph
+```
+
+### Change active object
+
+Default active object is nodes -\> change to edges
+
+```{r}
+GAStech_graph %>%
+  activate(edges) %>%
+  arrange(desc(Weight))
+```
+
+## Plotting with ggraph
+
+layout can refer to below:
+
+![](images/image-1008927954.png){width="339"}
+
+![](images/image-1874328083.png){width="338"}
+
+```{r}
+g <- ggraph(GAStech_graph,
+       layout = 'nicely') +
+  geom_edge_link(aes(width=Weight),
+                 alpha=0.2) +
+  scale_edge_width(range = c(0.1, 5)) +
+  geom_node_point(aes(color = Department,
+                      size = 2))
+
+g + theme_graph()
+```
+
+### Facet_edges()
+
+```{r}
+set_graph_style()
+
+g <- ggraph(GAStech_graph, 
+            layout = "nicely") + 
+  geom_edge_link(aes(width=Weight), 
+                 alpha=0.2) +
+  scale_edge_width(range = c(0.1, 5)) +
+  geom_node_point(aes(colour = Department), 
+                  size = 2)
+
+g + facet_edges(~Weekday)
+```
+
+### Computing centrality indices
+
+```{r}
+g <- GAStech_graph %>%
+  mutate(betweenness_centrality = centrality_betweenness()) %>%
+  ggraph(layout = "fr") + 
+  geom_edge_link(aes(width=Weight), 
+                 alpha=0.2) +
+  scale_edge_width(range = c(0.1, 5)) +
+  geom_node_point(aes(colour = Department,
+            size=betweenness_centrality))
+g + theme_graph()
+```
+
+## VizNetwork
+
+### Data preparation
+
+```{r}
+GAStech_edges_aggregated <- GAStech_edges %>%
+  left_join(GAStech_nodes, by = c("sourceLabel" = "label")) %>%
+  rename(from = id) %>%
+  left_join(GAStech_nodes, by = c("targetLabel" = "label")) %>%
+  rename(to = id) %>%
+  filter(MainSubject == "Work related") %>%
+  group_by(from, to) %>%
+    summarise(weight = n()) %>%
+  filter(from!=to) %>%
+  filter(weight > 1) %>%
+  ungroup()
+```
+
+### Plotting the interactive graph
+
+```{r}
+GAStech_nodes <- GAStech_nodes %>%
+  rename(group = Department) 
+
+visNetwork(GAStech_nodes,
+           GAStech_edges_aggregated) %>%
+  visIgraphLayout(layout = "layout_with_fr") %>%
+  visLegend() %>%
+  visLayout(randomSeed = 123)
+```

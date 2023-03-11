@@ -41,6 +41,8 @@ website:
             href: "In-class_Ex/In-class_Ex05/In-class_Ex05-Ternary.html"
           - text: "In-class Exercise 5 - Parallel"
             href: "In-class_Ex/In-class_Ex05/In-class_Ex05-Parallel.html"
+          - text: "In-class Exercise 8"
+            href: "In-class_Ex/In-class_Ex08/In-class_Ex08.html"
     right:
       - href: index.qmd
         text: Home
