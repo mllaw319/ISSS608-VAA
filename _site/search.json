@@ -387,8 +387,22 @@
   {
     "objectID": "Project/project.html",
     "href": "Project/project.html",
-    "title": "Untitled",
+    "title": "Project",
     "section": "",
-    "text": "pacman::p_load(tidyverse, lubridate, ggstatsplot)\nswimdata <- read_csv(\"data/swimdata_clean.csv\")\ncontinents <- read_csv(\"data/continents.csv\")\n\n\nswimdata <- swimdata %>%\n  mutate(Finals_Time2 = period_to_seconds(ms(Finals_Time))) %>%\n  mutate(Distance2 = as.numeric(str_replace(Distance, \"m\", \"\"))) %>%\n  mutate(Average_speed = Distance2/Finals_Time2)\n\n#write_csv(\n#  swimdata,\n#  \"swimdata_clean2.csv\",\n#)\n\nCorrelation between average speed and reaction time; using scatter plot (by gender, event, stroke, race distance and/or round) \n\nggplot(data = swimdata,\n       aes(x = Reaction_Time, y = Average_speed)) +\n  geom_point() +\n  geom_smooth(size = 1) +\n  facet_wrap(~Gender)\n\n\n\n\n\nggscatterstats(\n  data = swimdata,\n  x = Reaction_Time,\n  y = Average_speed,\n  marginal = FALSE,\n  )\n\n\n\n\nH0: Mean average speeds across strokes are the same (event constant) H1: Mean average speeds are not the same \n\nggbetweenstats(\n  data = swimdata,\n  x = Style, \n  y = Average_speed,\n  type = \"p\",\n  mean.ci = TRUE, \n  pairwise.comparisons = TRUE, \n  pairwise.display = \"s\",\n  p.adjust.method = \"fdr\",\n  messages = FALSE\n)\n\n\n\n\nH0: Mean average speeds across continents are the same (event constant) H1: Mean average speeds are not the same \n\ncountry <- swimdata %>%\n  group_by(Team) %>%\n  summarize(\n    n = n()\n  )\nview(country)"
+    "text": "pacman::p_load(tidyverse, lubridate, ggstatsplot, gapminder)\nswimdata <- read_csv(\"data/swimdata_clean.csv\")\ncontinents <- read_csv(\"data/continents.csv\")"
+  },
+  {
+    "objectID": "Project/project.html#average-speed",
+    "href": "Project/project.html#average-speed",
+    "title": "Project",
+    "section": "Average Speed",
+    "text": "Average Speed\n\nDistribution of Average Speed\nShiny: add selection for Gender, Stroke, Distance, Rounds\n\npacman:: p_load(ggiraph, patchwork)\n\nswimdata$tooltip <- c(paste0(\n  'Average Speed = ', swimdata$Average_speed,\n  \"\\n Name = \", swimdata$Name\n))\n\np1 <- ggplot(data=swimdata,\n            aes(x=Average_speed))+\n  geom_histogram_interactive(bins=60, aes(tooltip=swimdata$tooltip))\n\np2 <- ggplot(data=swimdata,\n             aes(x='', y=Average_speed))+\n  geom_boxplot()+\n  coord_flip()\n\ngirafe(\n  ggobj = p2 + p1 + plot_layout(nrow = 2, heights = c(1, 5)),\n  width_svg = 6,\n  height_svg = 6*0.618\n)\n\n\n\n\n\n\n\nComparing mean average speed across gender, strokes, distance, rounds\n\np3 <- ggbetweenstats(\n  data = swimdata,\n  x = Gender, #interactive\n  y = Average_speed\n)\np3\n\n\n\n\n\n\nComparing mean average speed across continents for different stroke, event and gender\n\np4 <- ggdotplotstats(\n  data       = swimdata,\n  y          = Continent,\n  x          = Average_speed,\n  type       = \"robust\",\n  title      = \"Distribution of average speed for continent\",\n  xlab       = \"Average Speed\",\n  ylab.      = \"Continent\"\n)\np4\n\n\n\n\n\n\nCorrelation between average speed and reaction time; using scatter plot (by gender, event, stroke, race distance and/or round) \n\np5 <- ggscatterstats(\n  data = swimdata,\n  x = Average_speed,\n  y = Reaction_Time,\n  marginal = FALSE,\n  )\np5"
+  },
+  {
+    "objectID": "Project/project.html#reaction-time",
+    "href": "Project/project.html#reaction-time",
+    "title": "Project",
+    "section": "Reaction Time",
+    "text": "Reaction Time\n\nDistribution of Reaction Time\nShiny: add selection for Gender, Stroke, Distance, Rounds\n\nswimdata$tooltip <- c(paste0(\n  'Reaction Time = ', swimdata$Reaction_Time,\n  \"\\n Name = \", swimdata$Name\n))\n\np6 <- ggplot(data=swimdata,\n            aes(x=Reaction_Time))+\n  geom_histogram_interactive(bins=40, aes(tooltip=swimdata$tooltip))\n\np7 <- ggplot(data=swimdata,\n             aes(x='', y=Reaction_Time))+\n  geom_boxplot()+\n  coord_flip()\n\ngirafe(\n  ggobj = p7 + p6 + plot_layout(nrow = 2, heights = c(1, 5)),\n  width_svg = 6,\n  height_svg = 6*0.618\n)\n\n\n\n\n\nComparing mean average speed across gender, strokes, distance, rounds\n\np8 <- ggbetweenstats(\n  data = swimdata,\n  x = Gender, #shiny input\n  y = Reaction_Time\n)\np8\n\n\n\n\n\n\nComparing mean Reaction Time across continents for different stroke, event and gender\n\np9 <- ggdotplotstats(\n  data       = swimdata, #filter shiny input\n  y          = Continent,\n  x          = Reaction_Time,\n  type       = \"robust\",\n  title      = \"Distribution of reaction time for continent\",\n  xlab       = \"Reaction Time\",\n  ylab.      = \"Continent\"\n)\np9"
   }
 ]
