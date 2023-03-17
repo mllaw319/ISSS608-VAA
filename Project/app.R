@@ -6,22 +6,123 @@ pacman::p_load(shiny,
                dendextend, 
                patchwork, 
                scales, 
+               rstantools,
                RColorBrewer,
                lubridate,
+               PMCMRplus,
                gapminder)
 
 ######## DATA FILES ########
 
 S_plits <- read_csv("data/splits.csv")
 ### new input 17/3 ###
-swimdata <- read_csv("data/swimdata_clean.csv")
-continents <- read_csv("data/continents.csv")
+ST_swimdata <- read_csv("data/swimdata_clean3.csv")
+ST_continents <- read_csv("data/continents.csv")
+### new input 17/3 ###
+
 
 
 ######## END OF DATA FILES ########
 
-
-
+### new input 17/3 ###
+averagespeedPanel <- tabPanel(
+  "Average Speed",
+  sidebarLayout(
+    sidebarPanel(
+      # Gender, Style, Distance, Round
+      selectInput("ST_style",
+                  label = h5("Style:"),
+                  choices = unique(ST_swimdata$Style),
+                  multiple = TRUE,
+                  selected = unique(ST_swimdata$Style),
+                  ),
+      selectInput("ST_gender",
+                  label=h5("Gender:"),
+                  choices=unique(ST_swimdata$Gender),
+                  multiple = TRUE,
+                  selected = unique(ST_swimdata$Gender),
+                  ),
+      selectInput("ST_distance",
+                  label=h5("Distance:"),
+                  choices=unique(ST_swimdata$Distance),
+                  multiple = TRUE,
+                  selected = unique(ST_swimdata$Distance)
+                  ),
+      selectInput("ST_round",
+                  label=h5("Round:"),
+                  choices=unique(ST_swimdata$Round),
+                  multiple = TRUE,
+                  selected = unique(ST_swimdata$Round),
+                  ),
+    ),
+    mainPanel(
+      tabsetPanel(
+        tabPanel(
+          "Distribution",
+          titlePanel("Average Speed of Swimmers"),
+          fluidRow(
+            column(12,
+              h3("Histogram Graph"),
+              p("The chart here shows the distribution of average speed by the selected variables."),
+              ggiraphOutput("ST_average_speed_dist", width="100%"),
+            )
+          ),
+          fluidRow(
+            column(12,
+               h3("Continent Scatterstats Plot"),
+               p("The chart here shows the distribution of average speed of continents by selected variables."),
+               plotOutput("ST_average_speed_continent_dist", width="100%"),
+            ),
+            
+          ),
+        ),
+        tabPanel(
+          "Compare Mean",
+          titlePanel("Comparison of Average Speeds"),
+          fluidRow(
+            column(12,
+              h3("Style"),
+              p("The chart here shows the comparison of average speed by style."),
+              plotOutput("ST_average_speed_compare_mean_style", width="100%"),
+            )
+          ),
+          fluidRow(
+            column(12,
+              h3("Gender"),
+              p("The chart here shows the comparison of average speed by gender"),
+              plotOutput("ST_average_speed_compare_mean_gender", width="100%"),
+            )
+          ),
+          fluidRow(
+            column(12,
+              h3("Distance"),
+              p("The chart here shows the comparison of average speed by distance"),
+              plotOutput("ST_average_speed_compare_mean_distance", width="100%"),
+            )
+          ),
+          fluidRow(
+            column(12,
+              h3("Round"),
+              p("The chart here shows the comparison of average speed by round"),
+              plotOutput("ST_average_speed_compare_mean_round", width="100%"),
+            )
+          ),
+        ),
+        tabPanel(
+          "Correlation",
+          titlePanel("Correlation of Average Speeds with Reaction Time"),
+          fluidRow(
+            column(12,
+              p("Shows the correlation between Average Speed and Reaction Time by selected events"),
+              plotOutput("ST_average_speed_correlation", width="60%", height="600px"),
+            )
+          ),
+        ),
+      )
+    )
+  )
+)
+### new input 17/3 ###
 
 ######## UI ########
 
@@ -32,9 +133,8 @@ ui <- fluidPage(
              tabPanel("Data"),
              ### START new input 17/3 ###
              navbarMenu(title = "Speed/Time",
-                        tabPanel("Distribution"),
-                        tabPanel("Compare Mean"),
-                        tabPanel("Correlation")),
+                        averagespeedPanel,
+                        tabPanel("Reaction Time")),
              ### END new input 17/3 ###
              tabPanel("Split Times",
                       sidebarLayout(
@@ -135,6 +235,140 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
   
+  # SECTION: AVERAGE SPEED
+  # SUB-SECTION: DISTRIBUTION
+  output$ST_average_speed_dist <- renderGirafe({
+    ST_swimdata_subset <- ST_swimdata
+    
+    if (!is_null( input$ST_style)) {
+      ST_swimdata_subset <- ST_swimdata %>% filter(Style %in% input$ST_style)
+    }
+    
+    if (!is_null(input$ST_distance)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Distance %in% input$ST_distance)
+    }
+    
+    if (!is_null( input$ST_gender)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Gender %in% input$ST_gender)
+    }
+    
+    if (!is_null(input$ST_round)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Round %in% input$ST_round)
+    }
+    
+    ST_swimdata_subset$tooltip <- c(paste0(
+      'Average Speed = ', ST_swimdata_subset$Average_speed,
+      "\n Name = ", ST_swimdata_subset$Name
+    ))
+    
+    p1 <- ggplot(data=ST_swimdata_subset, aes(x=Average_speed)) + 
+      geom_histogram_interactive(bins=10, aes(tooltip=ST_swimdata_subset$tooltip))
+    
+    p2 <- ggplot(data=ST_swimdata_subset, aes(x='', y=Average_speed)) +
+      geom_boxplot() +
+      coord_flip()
+    
+    p3 <- p2 + p1 + plot_layout(nrow = 2, heights = c(1, 5))
+    girafe(
+      code = print(p3),
+      ggobj = p3,
+      width_svg = 12,
+      height_svg = 12*0.618,
+    )
+  })
+  
+  output$ST_average_speed_continent_dist <- renderPlot({
+    ggdotplotstats(
+      data       = ST_swimdata,
+      y          = Continent,
+      x          = Average_speed,
+      type       = "robust",
+      xlab       = "Average Speed",
+      ylab.      = "Continent"
+    )
+  })
+
+  # SUB-SECTION: COMPARE MEAN
+  output$ST_average_speed_compare_mean_style <- renderPlot({
+    ggbetweenstats(
+      data = ST_swimdata,
+      x = Style,
+      y = Average_speed
+    )
+  })
+  output$ST_average_speed_compare_mean_gender <- renderPlot({
+    ggbetweenstats(
+      data = ST_swimdata,
+      x = Gender,
+      y = Average_speed
+    )
+  })
+  output$ST_average_speed_compare_mean_distance <- renderPlot({
+    ggbetweenstats(
+      data = ST_swimdata,
+      x = Distance,
+      y = Average_speed
+    )
+  })
+  output$ST_average_speed_compare_mean_round <- renderPlot({
+    ggbetweenstats(
+      data = ST_swimdata,
+      x = Round,
+      y = Average_speed
+    )
+  })
+  # SUB-SECTION: CORRELATION
+  output$ST_average_speed_correlation <- renderPlot({
+    ggscatterstats(
+      data = ST_swimdata,
+      x = Average_speed,
+      y = Reaction_Time,
+      marginal = FALSE,
+    )
+  })
+  
+  # SECTION: REACTION TIME
+  # SUB-SECTION: DISTRIBUTION
+  
+  output$ST_reaction_time_dist <- renderGirafe({
+    
+    if (!is_null( input$ST_style)) {
+      ST_swimdata_subset <- ST_swimdata %>% filter(Style %in% input$ST_style)
+    }
+    
+    if (!is_null(input$ST_distance)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Distance %in% input$ST_distance)
+    }
+    
+    if (!is_null( input$ST_gender)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Gender %in% input$ST_gender)
+    }
+    
+    if (!is_null(input$ST_round)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Round %in% input$ST_round)
+    }
+    
+    ST_swimdata_subset$tooltip <- c(paste0(
+      'Reaction Time = ', ST_swimdata_subset$Reaction_Time,
+      "\n Name = ", ST_swimdata_subset$Name
+    ))
+    
+    p1 <- ggplot(data=ST_swimdata_subset, aes(x=Reaction_Time)) + 
+      geom_histogram_interactive(bins=10, aes(tooltip=ST_swimdata_subset$tooltip))
+    
+    p2 <- ggplot(data=ST_swimdata_subset, aes(x='', y=Reaction_Time)) +
+      geom_boxplot() +
+      coord_flip()
+    
+    p3 <- p2 + p1 + plot_layout(nrow = 2, heights = c(1, 5))
+    girafe(
+      code = print(p3),
+      ggobj = p3,
+      width_svg = 12,
+      height_svg = 12*0.618,
+    )
+  })
+
   # SECTION: SPLITS
   # SUB-SECTION: OVERVIEW
   output$S_overview <- renderGirafe({
@@ -173,6 +407,9 @@ server <- function(input, output) {
     ## Together:
     girafe(code = print(S_1A + S_1B))
   })
+  
+
+    
   
   # SECTION: SPLITS
   # SUB-SECTION: DISTANCE(1)

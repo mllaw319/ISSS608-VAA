@@ -33,10 +33,10 @@ swimdata <- swimdata %>%
   mutate(Average_speed = Distance2/Finals_Time2) %>%
   filter(!Style %in% c('Medley', 'Relay'))
 
-#write_csv(
-#  swimdata,
-#  "swimdata_clean3.csv",
-#)
+write_csv(
+  swimdata,
+  "swimdata_clean.csv",
+)
 ```
 
 ## Average Speed
@@ -62,8 +62,10 @@ p2 <- ggplot(data=swimdata,
   geom_boxplot()+
   coord_flip()
 
+p3 <- p2 + p1 + plot_layout(nrow = 2, heights = c(1, 5))
+
 girafe(
-  ggobj = p2 + p1 + plot_layout(nrow = 2, heights = c(1, 5)),
+  ggobj = p3,
   width_svg = 6,
   height_svg = 6*0.618
 )
