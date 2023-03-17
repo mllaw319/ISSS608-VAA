@@ -6,11 +6,17 @@ pacman::p_load(shiny,
                dendextend, 
                patchwork, 
                scales, 
-               RColorBrewer)
+               RColorBrewer,
+               lubridate,
+               gapminder)
 
 ######## DATA FILES ########
 
-S_plits <- read_csv("splits.csv")
+S_plits <- read_csv("data/splits.csv")
+### new input 17/3 ###
+swimdata <- read_csv("data/swimdata_clean.csv")
+continents <- read_csv("data/continents.csv")
+
 
 ######## END OF DATA FILES ########
 
@@ -24,8 +30,12 @@ ui <- fluidPage(
   tags$head(tags$style(HTML(".selectize-input, .selectize-dropdown {font-size: 90%;}"))),
   navbarPage(HTML("<b>Swim Analytica</b>"),
              tabPanel("Data"),
-             tabPanel("Speed"),
-             tabPanel("Reaction Times"),
+             ### START new input 17/3 ###
+             navbarMenu(title = "Speed/Time",
+                        tabPanel("Distribution"),
+                        tabPanel("Compare Mean"),
+                        tabPanel("Correlation")),
+             ### END new input 17/3 ###
              tabPanel("Split Times",
                       sidebarLayout(
                         sidebarPanel(
