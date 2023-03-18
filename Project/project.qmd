@@ -75,12 +75,13 @@ girafe(
 ### Comparing mean average speed across gender, strokes, distance, rounds
 
 ```{r}
-p3 <- ggbetweenstats(
+ggbetweenstats(
   data = swimdata,
-  x = Gender, #interactive
-  y = Average_speed
-)
-p3
+  x = Distance, #interactive
+  y = Average_speed,
+  pairwise.comparisons = FALSE,)+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+            text=element_text(size=12.5)) 
 ```
 
 ### Comparing mean average speed across continents for different stroke, event and gender
@@ -139,7 +140,6 @@ girafe(
 
 ```
 
-
 Comparing mean average speed across gender, strokes, distance, rounds
 
 ```{r}
@@ -150,7 +150,6 @@ p8 <- ggbetweenstats(
 )
 p8
 ```
-
 
 ### Comparing mean Reaction Time across continents for different stroke, event and gender
 

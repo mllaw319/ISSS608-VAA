@@ -20,6 +20,13 @@ ST_swimdata <- read_csv("data/swimdata_clean3.csv")
 ST_continents <- read_csv("data/continents.csv")
 ### new input 17/3 ###
 
+### 18/3 ###
+### increase font for statistic charts
+### Distance in order
+### Remove pairwise for compare mean
+### add filter to Compare mean & Correlation
+### Add Reaction Time
+
 
 
 ######## END OF DATA FILES ########
@@ -293,29 +300,41 @@ server <- function(input, output) {
     ggbetweenstats(
       data = ST_swimdata,
       x = Style,
-      y = Average_speed
-    )
+      y = Average_speed,
+      pairwise.comparisons = FALSE,
+    )+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+             text=element_text(size=10.5))
   })
   output$ST_average_speed_compare_mean_gender <- renderPlot({
     ggbetweenstats(
       data = ST_swimdata,
       x = Gender,
-      y = Average_speed
-    )
+      y = Average_speed,
+      pairwise.comparisons = FALSE,
+    )+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+            text=element_text(size=10.5))
   })
   output$ST_average_speed_compare_mean_distance <- renderPlot({
     ggbetweenstats(
       data = ST_swimdata,
       x = Distance,
-      y = Average_speed
-    )
+      y = Average_speed,
+      pairwise.comparisons = FALSE,
+    )+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+            text=element_text(size=10.5))
   })
   output$ST_average_speed_compare_mean_round <- renderPlot({
     ggbetweenstats(
       data = ST_swimdata,
       x = Round,
-      y = Average_speed
-    )
+      y = Average_speed,
+      pairwise.comparisons = FALSE,
+    )+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+            text=element_text(size=10.5))
   })
   # SUB-SECTION: CORRELATION
   output$ST_average_speed_correlation <- renderPlot({
