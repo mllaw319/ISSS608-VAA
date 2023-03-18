@@ -15,23 +15,13 @@ pacman::p_load(shiny,
 ######## DATA FILES ########
 
 S_plits <- read_csv("data/splits.csv")
-### new input 17/3 ###
 ST_swimdata <- read_csv("data/swimdata_clean3.csv")
 ST_continents <- read_csv("data/continents.csv")
-### new input 17/3 ###
-
-### 18/3 ###
-### increase font for statistic charts
-### Distance in order
-### Remove pairwise for compare mean
-### add filter to Compare mean & Correlation
-### Add Reaction Time
-
 
 
 ######## END OF DATA FILES ########
 
-### new input 17/3 ###
+### Apple input 18/3###
 averagespeedPanel <- tabPanel(
   "Average Speed",
   sidebarLayout(
@@ -84,7 +74,7 @@ averagespeedPanel <- tabPanel(
           ),
         ),
         tabPanel(
-          "Compare Mean",
+          "Compare Average Speed",
           titlePanel("Comparison of Average Speeds"),
           fluidRow(
             column(12,
@@ -129,7 +119,105 @@ averagespeedPanel <- tabPanel(
     )
   )
 )
-### new input 17/3 ###
+
+reactiontimePanel <- tabPanel(
+  "Reaction Time",
+  sidebarLayout(
+    sidebarPanel(
+      # Gender, Style, Distance, Round
+      selectInput("RT_style",
+                  label = h5("Style:"),
+                  choices = unique(ST_swimdata$Style),
+                  multiple = TRUE,
+                  selected = unique(ST_swimdata$Style),
+      ),
+      selectInput("RT_gender",
+                  label=h5("Gender:"),
+                  choices=unique(ST_swimdata$Gender),
+                  multiple = TRUE,
+                  selected = unique(ST_swimdata$Gender),
+      ),
+      selectInput("RT_distance",
+                  label=h5("Distance:"),
+                  choices=unique(ST_swimdata$Distance),
+                  multiple = TRUE,
+                  selected = unique(ST_swimdata$Distance)
+      ),
+      selectInput("RT_round",
+                  label=h5("Round:"),
+                  choices=unique(ST_swimdata$Round),
+                  multiple = TRUE,
+                  selected = unique(ST_swimdata$Round),
+      ),
+    ),
+    mainPanel(
+      tabsetPanel(
+        tabPanel(
+          "Distribution",
+          titlePanel("Reaction Time of Swimmers"),
+          fluidRow(
+            column(12,
+                   h3("Histogram Graph"),
+                   p("The chart here shows the distribution of Reaction Time by the selected variables."),
+                   girafeOutput("RT_reaction_time_dist", width="100%")
+            )
+          ),
+          fluidRow(
+            column(12,
+                   h3("Continent Scatterstats Plot"),
+                   p("The chart here shows the distribution of Reaction Time of continents by selected variables."),
+                   plotOutput("RT_reaction_time_continent_dist", width="100%")
+            ),
+            
+          ),
+        ),
+        tabPanel(
+          "Compare Reaction Time",
+          titlePanel("Comparison of Reaction Time"),
+          fluidRow(
+            column(12,
+                   h3("Style"),
+                   p("The chart here shows the comparison of Reaction Time by style."),
+                   plotOutput("RT_reaction_time_compare_mean_style", width="100%"),
+            )
+          ),
+          fluidRow(
+            column(12,
+                   h3("Gender"),
+                   p("The chart here shows the comparison of Reaction Time by gender"),
+                   plotOutput("RT_reaction_time_compare_mean_gender", width="100%"),
+            )
+          ),
+          fluidRow(
+            column(12,
+                   h3("Distance"),
+                   p("The chart here shows the comparison of Reaction Time by distance"),
+                   plotOutput("RT_reaction_time_compare_mean_distance", width="100%"),
+            )
+          ),
+          fluidRow(
+            column(12,
+                   h3("Round"),
+                   p("The chart here shows the comparison of Reaction Time by round"),
+                   plotOutput("RT_reaction_time_compare_mean_round", width="100%"),
+            )
+          ),
+        ),
+        tabPanel(
+          "Correlation",
+          titlePanel("Correlation of Reaction Time with Average Speed"),
+          fluidRow(
+            column(12,
+                   p("Shows the correlation between Reaction Time with Average Speed by selected events"),
+                   plotOutput("RT_reaction_time_correlation", width="60%", height="600px"),
+            )
+          ),
+        ),
+      )
+    )
+  )
+)
+### Apple input 18/3###
 
 ######## UI ########
 
@@ -141,7 +229,7 @@ ui <- fluidPage(
              ### START new input 17/3 ###
              navbarMenu(title = "Speed/Time",
                         averagespeedPanel,
-                        tabPanel("Reaction Time")),
+                        reactiontimePanel),
              ### END new input 17/3 ###
              tabPanel("Split Times",
                       sidebarLayout(
@@ -269,11 +357,15 @@ server <- function(input, output) {
     ))
     
     p1 <- ggplot(data=ST_swimdata_subset, aes(x=Average_speed)) + 
-      geom_histogram_interactive(bins=10, aes(tooltip=ST_swimdata_subset$tooltip))
+      geom_histogram_interactive(bins=10, aes(tooltip=ST_swimdata_subset$tooltip))+
+      labs(x = "Average Speed (m/s)")+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+            text=element_text(size=12))
     
     p2 <- ggplot(data=ST_swimdata_subset, aes(x='', y=Average_speed)) +
       geom_boxplot() +
-      coord_flip()
+      coord_flip()+
+      labs(x = "", y = "Average Speed (m/s)")
     
     p3 <- p2 + p1 + plot_layout(nrow = 2, heights = c(1, 5))
     girafe(
@@ -283,73 +375,10 @@ server <- function(input, output) {
       height_svg = 12*0.618,
     )
   })
-  
+  # SECTION: AVERAGE SPEED
+  #SUB SUB SECTION: CONTINENT
   output$ST_average_speed_continent_dist <- renderPlot({
-    ggdotplotstats(
-      data       = ST_swimdata,
-      y          = Continent,
-      x          = Average_speed,
-      type       = "robust",
-      xlab       = "Average Speed",
-      ylab.      = "Continent"
-    )
-  })
-
-  # SUB-SECTION: COMPARE MEAN
-  output$ST_average_speed_compare_mean_style <- renderPlot({
-    ggbetweenstats(
-      data = ST_swimdata,
-      x = Style,
-      y = Average_speed,
-      pairwise.comparisons = FALSE,
-    )+
-      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
-             text=element_text(size=10.5))
-  })
-  output$ST_average_speed_compare_mean_gender <- renderPlot({
-    ggbetweenstats(
-      data = ST_swimdata,
-      x = Gender,
-      y = Average_speed,
-      pairwise.comparisons = FALSE,
-    )+
-      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
-            text=element_text(size=10.5))
-  })
-  output$ST_average_speed_compare_mean_distance <- renderPlot({
-    ggbetweenstats(
-      data = ST_swimdata,
-      x = Distance,
-      y = Average_speed,
-      pairwise.comparisons = FALSE,
-    )+
-      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
-            text=element_text(size=10.5))
-  })
-  output$ST_average_speed_compare_mean_round <- renderPlot({
-    ggbetweenstats(
-      data = ST_swimdata,
-      x = Round,
-      y = Average_speed,
-      pairwise.comparisons = FALSE,
-    )+
-      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
-            text=element_text(size=10.5))
-  })
-  # SUB-SECTION: CORRELATION
-  output$ST_average_speed_correlation <- renderPlot({
-    ggscatterstats(
-      data = ST_swimdata,
-      x = Average_speed,
-      y = Reaction_Time,
-      marginal = FALSE,
-    )
-  })
-  
-  # SECTION: REACTION TIME
-  # SUB-SECTION: DISTRIBUTION
-  
-  output$ST_reaction_time_dist <- renderGirafe({
+    ST_swimdata_subset <- ST_swimdata
     
     if (!is_null( input$ST_style)) {
       ST_swimdata_subset <- ST_swimdata %>% filter(Style %in% input$ST_style)
@@ -367,17 +396,210 @@ server <- function(input, output) {
       ST_swimdata_subset <- ST_swimdata_subset %>% filter(Round %in% input$ST_round)
     }
     
-    ST_swimdata_subset$tooltip <- c(paste0(
-      'Reaction Time = ', ST_swimdata_subset$Reaction_Time,
-      "\n Name = ", ST_swimdata_subset$Name
+    ggdotplotstats(
+      data       = ST_swimdata_subset,
+      y          = Continent,
+      x          = Average_speed,
+      type       = "robust",
+      xlab       = "Average Speed (m/s)",
+      ylab.      = "Continent"
+    )+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+            text=element_text(size=12))
+  })
+
+  # SECTION: AVERAGE SPEED
+  # SUB-SECTION: COMPARE MEAN
+  output$ST_average_speed_compare_mean_style <- renderPlot({
+    ST_swimdata_subset <- ST_swimdata
+    
+    if (!is_null( input$ST_style)) {
+      ST_swimdata_subset <- ST_swimdata %>% filter(Style %in% input$ST_style)
+    }
+    
+    if (!is_null(input$ST_distance)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Distance %in% input$ST_distance)
+    }
+    
+    if (!is_null( input$ST_gender)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Gender %in% input$ST_gender)
+    }
+    
+    if (!is_null(input$ST_round)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Round %in% input$ST_round)
+    }
+    
+    ggbetweenstats(
+      data = ST_swimdata_subset,
+      x = Style,
+      y = Average_speed,
+      type = "nonparametric",
+      pairwise.comparisons = FALSE,
+      centrality.label.args = list(size  = 4)
+    )+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+             text=element_text(size=12))
+  })
+  output$ST_average_speed_compare_mean_gender <- renderPlot({
+    ST_swimdata_subset <- ST_swimdata
+    
+    if (!is_null( input$ST_style)) {
+      ST_swimdata_subset <- ST_swimdata %>% filter(Style %in% input$ST_style)
+    }
+    
+    if (!is_null(input$ST_distance)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Distance %in% input$ST_distance)
+    }
+    
+    if (!is_null( input$ST_gender)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Gender %in% input$ST_gender)
+    }
+    
+    if (!is_null(input$ST_round)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Round %in% input$ST_round)
+    }
+    
+      ggbetweenstats(
+      data = ST_swimdata_subset,
+      x = Gender,
+      y = Average_speed,
+      type = "nonparametric",
+      pairwise.comparisons = FALSE,
+      centrality.label.args = list(size  = 4)
+    )+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+            text=element_text(size=12))
+  })
+  output$ST_average_speed_compare_mean_distance <- renderPlot({
+    ST_swimdata_subset <- ST_swimdata
+    
+    if (!is_null( input$ST_style)) {
+      ST_swimdata_subset <- ST_swimdata %>% filter(Style %in% input$ST_style)
+    }
+    
+    if (!is_null(input$ST_distance)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Distance %in% input$ST_distance)
+    }
+    
+    if (!is_null( input$ST_gender)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Gender %in% input$ST_gender)
+    }
+    
+    if (!is_null(input$ST_round)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Round %in% input$ST_round)
+    }
+    
+    ggbetweenstats(
+      data = ST_swimdata_subset,
+      x = Distance,
+      y = Average_speed,
+      type = "nonparametric",
+      pairwise.comparisons = FALSE,
+      centrality.label.args = list(size  = 4)
+    )+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+            text=element_text(size=12))
+  })
+  output$ST_average_speed_compare_mean_round <- renderPlot({
+    ST_swimdata_subset <- ST_swimdata
+    
+    if (!is_null( input$ST_style)) {
+      ST_swimdata_subset <- ST_swimdata %>% filter(Style %in% input$ST_style)
+    }
+    
+    if (!is_null(input$ST_distance)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Distance %in% input$ST_distance)
+    }
+    
+    if (!is_null( input$ST_gender)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Gender %in% input$ST_gender)
+    }
+    
+    if (!is_null(input$ST_round)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Round %in% input$ST_round)
+    }
+    
+    ggbetweenstats(
+      data = ST_swimdata_subset,
+      x = Round,
+      y = Average_speed,
+      type = "nonparametric",
+      pairwise.comparisons = FALSE,
+      centrality.label.args = list(size  = 4)
+    )+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+            text=element_text(size=12))
+  })
+  # SECTION: AVERAGE SPEED
+  # SUB-SECTION: CORRELATION
+  output$ST_average_speed_correlation <- renderPlot({
+    ST_swimdata_subset <- ST_swimdata
+    
+    if (!is_null( input$ST_style)) {
+      ST_swimdata_subset <- ST_swimdata %>% filter(Style %in% input$ST_style)
+    }
+    
+    if (!is_null(input$ST_distance)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Distance %in% input$ST_distance)
+    }
+    
+    if (!is_null( input$ST_gender)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Gender %in% input$ST_gender)
+    }
+    
+    if (!is_null(input$ST_round)) {
+      ST_swimdata_subset <- ST_swimdata_subset %>% filter(Round %in% input$ST_round)
+    }
+    
+    ggscatterstats(
+      data = ST_swimdata_subset,
+      x = Average_speed,
+      y = Reaction_Time,
+      type = "nonparametric",
+      marginal = FALSE,
+    )+
+      labs(x = "Average Speed (m/s)", y = "Reaction Time (s)")+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+            text=element_text(size=12))
+  })
+  
+  # SECTION: REACTION TIME
+  # SUB-SECTION: DISTRIBUTION
+  
+  output$RT_reaction_time_dist <- renderGirafe({
+    RT_swimdata_subset <- ST_swimdata
+    
+    if (!is_null( input$RT_style)) {
+      RT_swimdata_subset <- ST_swimdata %>% filter(Style %in% input$RT_style)
+    }
+    
+    if (!is_null(input$RT_distance)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Distance %in% input$RT_distance)
+    }
+    
+    if (!is_null( input$RT_gender)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Gender %in% input$RT_gender)
+    }
+    
+    if (!is_null(input$RT_round)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Round %in% input$RT_round)
+    }
+    
+    RT_swimdata_subset$tooltip <- c(paste0(
+      'Reaction Time = ', RT_swimdata_subset$Reaction_Time,
+      "\n Name = ", RT_swimdata_subset$Name
     ))
     
-    p1 <- ggplot(data=ST_swimdata_subset, aes(x=Reaction_Time)) + 
-      geom_histogram_interactive(bins=10, aes(tooltip=ST_swimdata_subset$tooltip))
+    p1 <- ggplot(data=RT_swimdata_subset, aes(x=Reaction_Time)) + 
+      geom_histogram_interactive(bins=10, aes(tooltip=RT_swimdata_subset$tooltip))+
+      labs(x = "Reaction Time (s)")+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+            text=element_text(size=12))
     
-    p2 <- ggplot(data=ST_swimdata_subset, aes(x='', y=Reaction_Time)) +
+    p2 <- ggplot(data=RT_swimdata_subset, aes(x='', y=Reaction_Time)) +
       geom_boxplot() +
-      coord_flip()
+      coord_flip()+
+      labs(x = "", y = "Reaction Time (s)")
     
     p3 <- p2 + p1 + plot_layout(nrow = 2, heights = c(1, 5))
     girafe(
@@ -387,7 +609,194 @@ server <- function(input, output) {
       height_svg = 12*0.618,
     )
   })
+  # SECTION: REACTION TIME
+  #SUB SUB SECTION: CONTINENT
+  output$RT_reaction_time_continent_dist <- renderPlot({
+    RT_swimdata_subset <- ST_swimdata
+    
+    if (!is_null( input$RT_style)) {
+      RT_swimdata_subset <- ST_swimdata %>% filter(Style %in% input$RT_style)
+    }
+    
+    if (!is_null(input$RT_distance)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Distance %in% input$RT_distance)
+    }
+    
+    if (!is_null( input$RT_gender)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Gender %in% input$RT_gender)
+    }
+    
+    if (!is_null(input$RT_round)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Round %in% input$RT_round)
+    }
+    
+    ggdotplotstats(
+      data       = RT_swimdata_subset,
+      y          = Continent,
+      x          = Reaction_Time,
+      type       = "robust",
+      xlab       = "Reaction Time (s)",
+      ylab.      = "Continent"
+    )+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+            text=element_text(size=12))
+  })
+  # SECTION: REACTION TIME
+  # SUB-SECTION: COMPARE MEAN
+  output$RT_reaction_time_compare_mean_style <- renderPlot({
+    RT_swimdata_subset <- ST_swimdata
+    
+    if (!is_null( input$RT_style)) {
+      RT_swimdata_subset <- ST_swimdata %>% filter(Style %in% input$RT_style)
+    }
+    
+    if (!is_null(input$RT_distance)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Distance %in% input$RT_distance)
+    }
+    
+    if (!is_null( input$RT_gender)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Gender %in% input$RT_gender)
+    }
+    
+    if (!is_null(input$RT_round)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Round %in% input$RT_round)
+    }
+    
+    ggbetweenstats(
+      data = RT_swimdata_subset,
+      x = Style,
+      y = Reaction_Time,
+      type = "nonparametric",
+      pairwise.comparisons = FALSE,
+      centrality.label.args = list(size  = 4)
+    )+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+            text=element_text(size=12))
+  })
+  output$RT_reaction_time_compare_mean_gender <- renderPlot({
+    RT_swimdata_subset <- ST_swimdata
+    
+    if (!is_null( input$RT_style)) {
+      RT_swimdata_subset <- ST_swimdata %>% filter(Style %in% input$RT_style)
+    }
+    
+    if (!is_null(input$RT_distance)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Distance %in% input$RT_distance)
+    }
+    
+    if (!is_null( input$RT_gender)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Gender %in% input$RT_gender)
+    }
+    
+    if (!is_null(input$RT_round)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Round %in% input$RT_round)
+    }
+    
+    ggbetweenstats(
+      data = RT_swimdata_subset,
+      x = Gender,
+      y = Average_speed,
+      type = "nonparametric",
+      pairwise.comparisons = FALSE,
+      centrality.label.args = list(size  = 4)
+    )+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+            text=element_text(size=12))
+  })
+  output$RT_reaction_time_compare_mean_distance <- renderPlot({
+    RT_swimdata_subset <- ST_swimdata
+    
+    if (!is_null( input$RT_style)) {
+      RT_swimdata_subset <- ST_swimdata %>% filter(Style %in% input$RT_style)
+    }
+    
+    if (!is_null(input$RT_distance)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Distance %in% input$RT_distance)
+    }
+    
+    if (!is_null( input$RT_gender)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Gender %in% input$RT_gender)
+    }
+    
+    if (!is_null(input$RT_round)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Round %in% input$RT_round)
+    }
+    ggbetweenstats(
+      data = RT_swimdata_subset,
+      x = Distance,
+      y = Reaction_Time,
+      type = "nonparametric",
+      pairwise.comparisons = FALSE,
+      centrality.label.args = list(size  = 4)
+    )+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+            text=element_text(size=12))
+  })
+  output$RT_reaction_time_compare_mean_round <- renderPlot({
+    RT_swimdata_subset <- ST_swimdata
+    
+    if (!is_null( input$RT_style)) {
+      RT_swimdata_subset <- ST_swimdata %>% filter(Style %in% input$RT_style)
+    }
+    
+    if (!is_null(input$RT_distance)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Distance %in% input$RT_distance)
+    }
+    
+    if (!is_null( input$RT_gender)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Gender %in% input$RT_gender)
+    }
+    
+    if (!is_null(input$RT_round)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Round %in% input$RT_round)
+    }
 
+        ggbetweenstats(
+      data = RT_swimdata_subset,
+      x = Round,
+      y = Average_speed,
+      type = "nonparametric",
+      pairwise.comparisons = FALSE,
+      centrality.label.args = list(size  = 4)
+    )+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+            text=element_text(size=12))
+  })
+  # SECTION: REACTION TIME
+  # SUB-SECTION: CORRELATION
+  output$RT_reaction_time_correlation <- renderPlot({
+    RT_swimdata_subset <- ST_swimdata
+    
+    if (!is_null( input$RT_style)) {
+      RT_swimdata_subset <- ST_swimdata %>% filter(Style %in% input$RT_style)
+    }
+    
+    if (!is_null(input$RT_distance)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Distance %in% input$RT_distance)
+    }
+    
+    if (!is_null( input$RT_gender)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Gender %in% input$RT_gender)
+    }
+    
+    if (!is_null(input$RT_round)) {
+      RT_swimdata_subset <- RT_swimdata_subset %>% filter(Round %in% input$RT_round)
+    }
+    
+    ggscatterstats(
+      data = RT_swimdata_subset,
+      x = Reaction_Time,
+      y = Average_speed,
+      type = "nonparametric",
+      marginal = FALSE,
+    )+
+      labs(x = "Reaction Time (s)", y = "Average Speed (m/s)")+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+            text=element_text(size=12))
+  })
+  
+  
+  
   # SECTION: SPLITS
   # SUB-SECTION: OVERVIEW
   output$S_overview <- renderGirafe({

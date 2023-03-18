@@ -72,16 +72,47 @@ girafe(
 
 ```
 
+```{r}
+swimdata$tooltip <- c(paste0(
+      'Reaction Time = ', swimdata$Reaction_Time,
+      "\n Name = ", swimdata$Name
+    ))
+    
+    p1 <- ggplot(data=swimdata, aes(x=Reaction_Time)) + 
+      geom_histogram_interactive(bins=10, aes(tooltip=swimdata$tooltip))+
+      labs(x = "Reaction Time (s)")+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+            text=element_text(size=12))
+    
+    p2 <- ggplot(data=swimdata, aes(x='', y=Reaction_Time)) +
+      geom_boxplot() +
+      coord_flip()+
+      labs(x = "", y = "Reaction Time (s)")
+    
+    p3 <- p2 + p1 + plot_layout(nrow = 2, heights = c(1, 5))
+    girafe(
+      code = print(p3),
+      ggobj = p3,
+      width_svg = 12,
+      height_svg = 12*0.618,
+    )
+```
+
 ### Comparing mean average speed across gender, strokes, distance, rounds
 
 ```{r}
+ST_level_order <- c('50m', '100m', '200m', '400m', '800m', '1500m')
+
 ggbetweenstats(
-  data = swimdata,
-  x = Distance, #interactive
-  y = Average_speed,
-  pairwise.comparisons = FALSE,)+
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
-            text=element_text(size=12.5)) 
+      data = ST_swimdata,
+      x = Style,
+      y = Average_speed,
+      type = "nonparametric",
+      pairwise.comparisons = FALSE,
+      centrality.label.args = list(size  = 4)
+    )+
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+             text=element_text(size=12))
 ```
 
 ### Comparing mean average speed across continents for different stroke, event and gender
@@ -146,7 +177,8 @@ Comparing mean average speed across gender, strokes, distance, rounds
 p8 <- ggbetweenstats(
   data = swimdata,
   x = Gender, #shiny input
-  y = Reaction_Time
+  y = Reaction_Time,
+  centrality.label.args = list(size  = 6)
 )
 p8
 ```
